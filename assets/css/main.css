@@ -1,12 +1,6 @@
 @import url("fontawesome-all.min.css");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic");
 
-/*
-	Strata by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
-
 html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
@@ -98,7 +92,7 @@ input, select, textarea {
 		}
 
 	body, input, select, textarea {
-		color: #a2a2a2;
+		color: #6D6968;
 		font-family: "Source Sans Pro", Helvetica, sans-serif;
 		font-size: 16pt;
 		font-weight: 400;
@@ -122,7 +116,7 @@ input, select, textarea {
 		}
 
 	strong, b {
-		color: #787878;
+		color: #37403F;
 		font-weight: 400;
 	}
 
@@ -135,7 +129,7 @@ input, select, textarea {
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		color: #787878;
+		color: #37403F;
 		font-weight: 400;
 		line-height: 1em;
 		margin: 0 0 1em 0;
@@ -1801,7 +1795,7 @@ input, select, textarea {
 	}
 
 	label {
-		color: #787878;
+		color: #37403F;
 		display: block;
 		font-size: 0.9em;
 		font-weight: 400;
@@ -1855,7 +1849,7 @@ input, select, textarea {
 	}
 
 		select option {
-			color: #787878;
+			color: #37403F;
 			background: #fff;
 		}
 
@@ -1938,8 +1932,8 @@ input, select, textarea {
 
 		input[type="checkbox"]:checked + label:before,
 		input[type="radio"]:checked + label:before {
-			background: #787878;
-			border-color: #787878;
+			background: #37403F;
+			border-color: #37403F;
 			color: #fff;
 			content: '\f00c';
 		}
@@ -2388,7 +2382,7 @@ input, select, textarea {
 		}
 
 		table th {
-			color: #787878;
+			color: #37403F;
 			font-size: 0.9em;
 			font-weight: 400;
 			padding: 0 0.75em 0.75em 0.75em;
@@ -2446,7 +2440,7 @@ input, select, textarea {
 		background-color: transparent;
 		border-radius: 0.35em;
 		border: solid 3px #efefef;
-		color: #787878 !important;
+		color: #37403F !important;
 		cursor: pointer;
 		display: inline-block;
 		font-weight: 400;
