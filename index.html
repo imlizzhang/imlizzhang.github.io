@@ -26,7 +26,7 @@
 						</header>
 						<h2>Li Zhang</h2>
 						<p><b>Ph.D. candidate</b>/<b>programmer</b> of <a href="https://www.itreetools.org/tools/research-suite">i-Tree Research Suite - HydroPlus</a>
-						<li>Ph.D.,&nbsp;&nbsp;&nbsp;Environmental Science, <a href="https://www.esf.edu/">SUNY ESF</a> (2024, expected) <br />
+						<li>Ph.D.,&nbsp;&nbsp;&nbsp;Environmental Science, <a href="https://www.esf.edu/">SUNY ESF</a> (Defense expected Dec 2024) <br />
 						 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Under the supervision of <a href="https://www.esf.edu/faculty/endreny/">Theodore Endreny</a></li>
 						<li>Visiting Scholar,&nbsp;&nbsp;Carbon Cycle Research Center, <a href="https://www.ntu.edu.tw/english/">National Taiwan University</a> (2018)<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Under the supervision of <a href="https://enve.ntu.edu.tw/dispPageBox/giee/GieeENCP.aspx?ddsPageID=GIEETEFULL&dbid=3616163860">P.-C. Chiang</a></li>
@@ -37,6 +37,31 @@
 							<li><a href="#" class="button">Learn More</a></li>
 						</ul>-->
 					</section>
+				
+
+<!-- Six -->
+					<section id="six">
+						<header class="major">
+							<h2>Skills </h2>
+						</header>
+						<p>
+						   <li>Programming:</li>
+						   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C++; Python; R; Visual Basic<br />
+						   <li>Engineering:</li>
+						   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ArcGIS Products; AutoCAD; Surveying<br />
+						   <li>Modeling:</li>
+						   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i-Tree; HEC-RAS; SWMM<br />
+						   <li>Statistical Data Analysis</li>
+						   <li>Microsoft office</li>
+						   <li>Version Control:</li>
+						    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Git; SVN
+
+						</p>
+						<!-- <ul class="actions">
+							<li><a href="#" class="button">Learn More</a></li>
+						</ul>-->
+					</section>	
+
 					
 				<!-- One -->
 					<section id="one">
@@ -44,21 +69,24 @@
 							<h2>Research Interests</h2>
 						</header>
 						<p>My research focuses on developing i-Tree Research Suite - HydroPlus 
-						to simulate the effects of changing urban surfaces and human activities on the hydrological cycle, 
-						and the benefits of trees on the environment. My main contributions are:<br /><br />
-						1)<strong> i-Tree Hydro</strong> - Creating algorisms for the Green Infrastructures devices, 
-						allowing multiple GIs running in parallel and series in other spatial models like i-Tree Buffer.<br /><br />
-						2)<strong> i-Tree Cool Air</strong> – To generate a national map without abrupt temperature changes along 
-						the Thiessen Polygon boundaries, I employ an inverse-distance weighted method. 
-						This method allows us to obtain spatially weighted meteorological inputs from multiple 
-						weather stations. This work provides a more accurate representation of the temperature 
-						distribution across the entire map.<br /><br />
-						3)<strong> i-Tree Buffer</strong> - Developing a Stochastic Export Coefficient Model which can 
-						simulate annual variation in phosphorus loading from diffuse runoff to assist 
-						with nutrient management plans for river basins. Built the nutrient hotspot mapping 
-						water quality model i-Tree Buffer into HydroPlus, and allow this tool predicting 
-						shifts in hotspots over time. By considering both spatial and temporal dimensions, 
-						we can more accurately forecast changes in hotspots and their associated impacts.
+						to simulate the effects of climate change, urban surface changes, and human activities on the hydrological cycle. 
+						This includes assessing impacts on water quality, nutrient loading, and flood risk, as well as evaluating the environmental benefits of trees.
+						 My main contributions are:<br /><br />
+						1)<strong> i-Tree Buffer</strong> <br /> - Developed a temeral model: Stochastic Export Coefficient Model which can 
+						simulate annual variation in nutrients loading from Non-Point Source pollution to assist 
+						with nutrient management plans for river basins. <br />
+						- Developed a spatial model: i-Tree Buffer to generate pollutant loading hotspot maps and optimize the placement of green infrastructure (GI). 
+						Enhanced i-Tree Buffer to simulate the effects of GI, contributing to water quality improvements in urban areas vulnerable to climate change.<br />
+						- Developed Python tools for automated data downloading and geographic data preprocessing.<br /><br />
+						 
+						2)<strong> i-Tree Hydro</strong> - Developed water quality algorisms for the Green Infrastructures devices.  Developed algorithms for map coordinate system projections; 
+						contributed to code maintenance and debugging.<br /><br />
+						
+						3)<strong> i-Tree Cool Air</strong> - Developed a method to generate a national temperature map without abrupt changes along Thiessen Polygon boundaries by 
+						employing the inverse-distance weighted (IDW) method, using spatially weighted meteorological inputs from multiple weather stations. 
+						This approach offers a more accurate temperature distribution. Collaborated with developers and scientists to integrate i-Tree Buffer and i-Tree Cool Air, 
+						supporting climate resilience and environmental justice efforts.<br /><br />
+						
 						</p>
 						<!-- <ul class="actions">
 							<li><a href="#" class="button">Learn More</a></li>
@@ -72,10 +100,28 @@
 						</header>
 						<div class="row">
 							<article class="col-6 col-12-xsmall work-item">
-								<a href="images/thumbs/buffer.jpg" class="image fit thumb"><img src="images/thumbs/buffer.jpg" alt="" /></a>
-								<h3>Built i-Tree Buffer into HydroPlus (in progress, debugging the flow path map)</h3>
-								<p>Built the nutrient hotspot mapping water quality model i-Tree Buffer into HydroPlus, 
-								and allow this tool predicting shifts in hotspots over time.</p>
+								<a href="images/thumbs/GI_BA.jpg" class="image fit thumb"><img src="images/thumbs/GI_BA.jpg" alt="" /></a>
+								<h3>i-Tree Buffer to simulate the effects of Green Infrastructure</h3>
+								<p>The pollutant change after Bioretention installation (Saddle River, CADA 2003 model).</p>
+							</article>
+							
+							<article class="col-6 col-12-xsmall work-item">
+								<a href="images/thumbs/hotspot.jpg" class="image fit thumb"><img src="images/thumbs/hotspot.jpg" alt="" /></a>
+								<h3>Where sre the hotspots?</h3>
+								<p>Found the pollutant loading hotspots for Saddle River,NJ using i-Tree Buffer.</p>
+							</article>
+							
+							<article class="col-6 col-12-xsmall work-item">
+								<a href="images/thumbs/D8_20032016_NHD.jpg" class="image fit thumb"><img src="images/thumbs/D8_2003_NHD.jpg" alt="" /></a>
+								<h3>Built i-Tree Buffer Spatial Simulation into HydroPlus</h3>
+								<p>Built the two version of CADA models into i-Tree HydroPlus, 
+								allowing pollutants loading hotspots prediction (Syracuse, CADA 2003 model).</p>
+							</article>
+							
+							<article class="col-6 col-12-xsmall work-item">
+								<a href="https://doi.org/10.1016/j.jhydrol.2023.129447">Stochastic Export Coefficient Model to Predict Annual Variation in Phosphorus Loading from Diffuse Runoff</a>
+								<a href="images/thumbs/JoH.jpg" class="image fit thumb"><img src="images/thumbs/JoH.jpg" alt="" /></a>
+								<h3>New publication on <i>Journal of Hydrology</i>!</h3>
 							</article>
 							
 							<article class="col-6 col-12-xsmall work-item">
@@ -155,33 +201,7 @@
 						</ul>-->
 					</section>	
 					
-				<!-- Six -->
-					<section id="six">
-						<header class="major">
-							<h2>Skills </h2>
-						</header>
-						<p>
-						   <li>Programming Languages</li>
-						   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C++<br />
-						   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Python<br />
-						   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; R<br />
-						   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Visual Basic
-						   <li>Engineering</li>
-						   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ArcGIS Products<br />
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AutoCAD<br />
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Surveying<br />
-						   <li>Modeling</li>
-						   <li>Statistical Data Analysis</li>
-						   <li>Microsoft office</li>
-						   <li>Version Control Software Tools</li>
-						    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Git<br />
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SVN
-
-						</p>
-						<!-- <ul class="actions">
-							<li><a href="#" class="button">Learn More</a></li>
-						</ul>-->
-					</section>	
+				
 				<!-- Seven -->
 					<section id="seven">
 						<h2>Contact</h2>
