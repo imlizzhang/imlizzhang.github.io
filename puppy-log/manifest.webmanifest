@@ -1,0 +1,9 @@
+{
+  "name": "Puppy Log · 小狗成长日志",
+  "short_name": "Puppy Log",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f4ee",
+  "theme_color": "#f7f4ee",
+  "icons": []
+}

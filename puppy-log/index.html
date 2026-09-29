@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f4ee" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Puppy Log" />
+  <title>Puppy Log · 小狗成长日志</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">SHARED PUPPY JOURNAL</div>
+      <h1><span id="petNameTitle">Puppy</span> Log <span aria-hidden="true">🐕</span></h1>
+    </div>
+    <div class="top-actions">
+      <span id="syncPill" class="pill">演示模式</span>
+      <button id="settingsBtn" class="icon-btn hidden" aria-label="设置">⚙︎</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section id="demoBanner" class="banner">
+      <strong>现在是本机演示模式。</strong>
+      界面可以直接试用，但两台手机还不会同步。连接 Supabase 后会自动变成你们俩共享的云端日志。
+    </section>
+
+    <section id="authView" class="panel auth-panel hidden">
+      <div class="panel-title">
+        <div>
+          <div class="eyebrow">PRIVATE ACCESS</div>
+          <h2>登录你们的小狗日志</h2>
+        </div>
+      </div>
+      <div class="segmented">
+        <button class="seg active" data-auth-mode="signin">登录</button>
+        <button class="seg" data-auth-mode="signup">注册</button>
+      </div>
+      <form id="authForm" class="form-stack">
+        <label>邮箱
+          <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com" />
+        </label>
+        <label>密码
+          <input id="authPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="至少 6 位" />
+        </label>
+        <button id="authSubmitBtn" class="primary" type="submit">登录</button>
+      </form>
+      <p id="authHint" class="hint">你和你老公各自用自己的账号登录，但加入同一个家庭空间。</p>
+    </section>
+
+    <section id="onboardingView" class="panel hidden">
+      <div class="panel-title">
+        <div>
+          <div class="eyebrow">ONE-TIME SETUP</div>
+          <h2>建立你们的共享空间</h2>
+        </div>
+      </div>
+      <div class="onboarding-grid">
+        <form id="createHouseholdForm" class="mini-card form-stack">
+          <h3>第一次设置</h3>
+          <label>你的显示名字
+            <input id="createDisplayName" required placeholder="例如 Li / Mom" />
+          </label>
+          <label>家庭空间名字
+            <input id="householdName" required value="Our Puppy" />
+          </label>
+          <label>小狗名字
+            <input id="petNameInput" required placeholder="Puppy name" />
+          </label>
+          <button class="primary" type="submit">创建共享日志</button>
+        </form>
+
+        <form id="joinHouseholdForm" class="mini-card form-stack">
+          <h3>另一位加入</h3>
+          <label>你的显示名字
+            <input id="joinDisplayName" required placeholder="例如 Dad" />
+          </label>
+          <label>家庭邀请码
+            <input id="inviteCodeInput" required autocapitalize="characters" placeholder="8 位邀请码" />
+          </label>
+          <button class="secondary" type="submit">加入共享日志</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="appView">
+      <section class="status-grid" aria-label="最近状态">
+        <article class="status-card">
+          <span class="status-icon">💧</span>
+          <div><small>上次小便</small><strong id="lastPee">—</strong></div>
+        </article>
+        <article class="status-card">
+          <span class="status-icon">💩</span>
+          <div><small>上次大便</small><strong id="lastPoop">—</strong></div>
+        </article>
+        <article class="status-card">
+          <span class="status-icon">🍽️</span>
+          <div><small>上次吃饭</small><strong id="lastMeal">—</strong></div>
+        </article>
+        <article class="status-card">
+          <span class="status-icon">⚖️</span>
+          <div><small>最新体重</small><strong id="latestWeight">—</strong></div>
+        </article>
+      </section>
+
+      <section class="panel quick-panel">
+        <div class="panel-title">
+          <div>
+            <div class="eyebrow">QUICK LOG</div>
+            <h2>刚刚发生了什么？</h2>
+          </div>
+          <button id="customTimeBtn" class="text-btn">补记过去时间</button>
+        </div>
+
+        <div class="quick-grid">
+          <button class="quick-btn" data-type="pee"><span>💧</span><b>小便</b></button>
+          <button class="quick-btn" data-type="poop"><span>💩</span><b>大便</b></button>
+          <button class="quick-btn" data-type="meal"><span>🍽️</span><b>吃饭</b></button>
+          <button class="quick-btn" data-type="water"><span>🥤</span><b>喝水</b></button>
+          <button class="quick-btn" data-type="weight"><span>⚖️</span><b>体重</b></button>
+          <button class="quick-btn" data-type="note"><span>📝</span><b>备注</b></button>
+        </div>
+      </section>
+
+      <section class="summary-row">
+        <article class="mini-stat"><small>今天小便</small><strong id="todayPee">0</strong><span>次</span></article>
+        <article class="mini-stat"><small>今天大便</small><strong id="todayPoop">0</strong><span>次</span></article>
+        <article class="mini-stat"><small>今天吃饭</small><strong id="todayMeal">0</strong><span>次</span></article>
+        <article class="mini-stat"><small>今天喝水</small><strong id="todayWater">0</strong><span>次</span></article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">
+          <div>
+            <div class="eyebrow">HANDOFF</div>
+            <h2>最近记录</h2>
+          </div>
+          <div class="filter-wrap">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="today">今天</button>
+          </div>
+        </div>
+        <div id="timeline" class="timeline"></div>
+        <button id="loadMoreBtn" class="secondary full hidden">加载更早记录</button>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="logDialog">
+    <form id="logForm" method="dialog" class="dialog-card">
+      <div class="dialog-head">
+        <div>
+          <div id="dialogEyebrow" class="eyebrow">ADD EVENT</div>
+          <h2 id="dialogTitle">记录</h2>
+        </div>
+        <button id="closeDialogBtn" class="icon-btn" type="button" aria-label="关闭">×</button>
+      </div>
+
+      <input id="eventType" type="hidden" />
+      <label>时间
+        <input id="eventTime" type="datetime-local" required />
+      </label>
+
+      <div id="amountRow" class="two-col hidden">
+        <label>数量
+          <input id="eventAmount" type="number" inputmode="decimal" step="0.01" min="0" placeholder="可选" />
+        </label>
+        <label>单位
+          <select id="eventUnit">
+            <option value="">—</option>
+          </select>
+        </label>
+      </div>
+
+      <label>备注
+        <textarea id="eventNote" rows="3" placeholder="可选，例如：饭吃完了 / 便便偏软"></textarea>
+      </label>
+
+      <div class="dialog-actions">
+        <button id="cancelDialogBtn" class="secondary" type="button">取消</button>
+        <button class="primary" type="submit">保存记录</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog">
+    <div class="dialog-card">
+      <div class="dialog-head">
+        <div>
+          <div class="eyebrow">SETTINGS</div>
+          <h2>共享空间</h2>
+        </div>
+        <button id="closeSettingsBtn" class="icon-btn" type="button" aria-label="关闭">×</button>
+      </div>
+      <div class="settings-list">
+        <div><small>家庭空间</small><strong id="settingsHousehold">—</strong></div>
+        <div><small>小狗</small><strong id="settingsPet">—</strong></div>
+        <div><small>你现在的名字</small><strong id="settingsMe">—</strong></div>
+        <div><small>邀请另一位</small><strong id="settingsInvite">—</strong></div>
+      </div>
+      <p class="hint">邀请码只用于把第二个账号加入同一个共享空间。两个人各自登录后，新增记录会同步到同一个数据库。</p>
+      <button id="signOutBtn" class="danger full">退出登录</button>
+    </div>
+  </dialog>
+
+  <script src="./config.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
