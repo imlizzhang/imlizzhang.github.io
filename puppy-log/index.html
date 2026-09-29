@@ -16,9 +16,10 @@
   <div id="toast" class="toast" aria-live="polite"></div>
 
   <header class="topbar">
-    <div>
+    <div class="title-block">
       <div class="eyebrow">SHARED PUPPY JOURNAL</div>
       <h1><span id="petNameTitle">Puppy</span> Log <span aria-hidden="true">🐕</span></h1>
+      <div id="petSwitcher" class="pet-switcher" aria-label="切换小狗"></div>
     </div>
     <div class="top-actions">
       <span id="syncPill" class="pill">演示模式</span>
@@ -71,7 +72,7 @@
           <label>家庭空间名字
             <input id="householdName" required value="Our Puppy" />
           </label>
-          <label>小狗名字
+          <label>第一只小狗名字
             <input id="petNameInput" required placeholder="Puppy name" />
           </label>
           <button class="primary" type="submit">创建共享日志</button>
@@ -159,6 +160,7 @@
         <div>
           <div id="dialogEyebrow" class="eyebrow">ADD EVENT</div>
           <h2 id="dialogTitle">记录</h2>
+          <div id="dialogPetName" class="dialog-pet-name"></div>
         </div>
         <button id="closeDialogBtn" class="icon-btn" type="button" aria-label="关闭">×</button>
       </div>
@@ -199,15 +201,46 @@
         </div>
         <button id="closeSettingsBtn" class="icon-btn" type="button" aria-label="关闭">×</button>
       </div>
+
       <div class="settings-list">
         <div><small>家庭空间</small><strong id="settingsHousehold">—</strong></div>
-        <div><small>小狗</small><strong id="settingsPet">—</strong></div>
         <div><small>你现在的名字</small><strong id="settingsMe">—</strong></div>
         <div><small>邀请另一位</small><strong id="settingsInvite">—</strong></div>
       </div>
-      <p class="hint">邀请码只用于把第二个账号加入同一个共享空间。两个人各自登录后，新增记录会同步到同一个数据库。</p>
+
+      <div class="pet-settings">
+        <div class="pet-settings-head">
+          <div>
+            <small>小狗管理</small>
+            <strong>切换或添加小狗</strong>
+          </div>
+          <button id="addPetBtn" class="secondary compact" type="button">＋ 添加</button>
+        </div>
+        <div id="settingsPetList" class="settings-pet-list"></div>
+      </div>
+
+      <p class="hint">每只小狗的大小便、吃饭、喝水和体重会分别保存。你和你老公看到的是同一组小狗和同一份云端记录。</p>
       <button id="signOutBtn" class="danger full">退出登录</button>
     </div>
+  </dialog>
+
+  <dialog id="addPetDialog">
+    <form id="addPetForm" class="dialog-card">
+      <div class="dialog-head">
+        <div>
+          <div class="eyebrow">ADD PET</div>
+          <h2>添加另一只小狗</h2>
+        </div>
+        <button id="closeAddPetBtn" class="icon-btn" type="button" aria-label="关闭">×</button>
+      </div>
+      <label>小狗名字
+        <input id="newPetName" required maxlength="50" autocomplete="off" placeholder="例如 Douby" />
+      </label>
+      <div class="dialog-actions">
+        <button id="cancelAddPetBtn" class="secondary" type="button">取消</button>
+        <button class="primary" type="submit">添加并切换</button>
+      </div>
+    </form>
   </dialog>
 
   <script src="./config.js"></script>
