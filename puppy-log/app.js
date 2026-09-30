@@ -9,6 +9,54 @@
     !cfg.SUPABASE_PUBLISHABLE_KEY.includes("PASTE_");
 
   const $ = (id) => document.getElementById(id);
+
+  const LANGUAGE_KEY = "puppy-log-language";
+  let currentLanguage = localStorage.getItem(LANGUAGE_KEY) || "zh";
+  const T = new Map([
+    ["演示模式","Demo mode"],["云端同步","Cloud sync"],["登录你们的小狗日志","Sign in to your puppy log"],
+    ["登录","Sign in"],["注册","Sign up"],["邮箱","Email"],["密码","Password"],["至少 6 位","At least 6 characters"],
+    ["忘记密码？","Forgot password?"],["每位家庭成员使用自己的账号登录，但加入同一个家庭空间。","Each family member uses their own account and joins the same family space."],
+    ["设置新密码","Set a new password"],["新密码","New password"],["再次输入新密码","Confirm new password"],
+    ["更新密码","Update password"],["设置成功后，你可以继续使用 Puppy Log。","After updating your password, you can continue using Puppy Log."],
+    ["加入 Puppy Log 家庭","Join a Puppy Log family"],["加入已有家庭","Join an existing family"],
+    ["你的显示名字","Your display name"],["家庭邀请码","Family invite code"],["加入共享日志","Join shared log"],
+    ["已有邀请码的家庭成员从这里加入。","Family members with an invite code can join here."],
+    ["上次小便","Last pee"],["上次大便","Last poop"],["上次吃饭","Last meal"],["最新体重","Latest weight"],
+    ["刚刚发生了什么？","What just happened?"],["补记过去时间","Log a past time"],
+    ["小便","Pee"],["大便","Poop"],["吃饭","Meal"],["喝水","Water"],["体重","Weight"],["备注","Note"],
+    ["今天小便","Pee today"],["今天大便","Poop today"],["今天吃饭","Meals today"],["今天喝水","Water today"],
+    ["最近记录","Recent activity"],["全部","All"],["今天","Today"],["共享空间","Shared space"],
+    ["家庭空间","Family space"],["你现在的名字","Your display name"],["邀请家庭成员","Invite family member"],
+    ["小狗管理","Dogs"],["切换或添加小狗","Switch or add a dog"],["＋ 添加","+ Add"],["退出登录","Sign out"],
+    ["取消","Cancel"],["保存","Save"],["记录","Log"],["时间","Time"],["补充说明","Details"],
+    ["记录时间","Log time"],["小狗名字","Dog name"],["例如：Douby","e.g. Douby"],["添加","Add"],
+    ["暂无","None yet"],["次"," times"],["分钟前"," min ago"],["小时前"," hr ago"],["天前"," days ago"]
+  ]);
+
+  function translateNode(node) {
+    const raw=node.nodeValue, s=raw?.trim();
+    if(!s) return;
+    if(currentLanguage==="en" && T.has(s)) node.nodeValue=raw.replace(s,T.get(s));
+    if(currentLanguage==="zh") for(const [zh,en] of T) if(s===en){node.nodeValue=raw.replace(s,zh);break;}
+  }
+  function applyLanguage() {
+    const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT), nodes=[];
+    while(w.nextNode()) nodes.push(w.currentNode);
+    nodes.forEach(translateNode);
+    document.querySelectorAll("input[placeholder]").forEach(el=>{
+      const p=el.placeholder;
+      if(currentLanguage==="en"&&T.has(p)) el.placeholder=T.get(p);
+      else if(currentLanguage==="zh") for(const [zh,en] of T) if(p===en){el.placeholder=zh;break;}
+    });
+    const b=$("languageToggleBtn");
+    if(b){b.textContent=currentLanguage==="zh"?"EN":"中"; b.setAttribute("aria-label",currentLanguage==="zh"?"Switch to English":"切换到中文");}
+    document.documentElement.lang=currentLanguage==="zh"?"zh-CN":"en";
+  }
+  function toggleLanguage(){
+    currentLanguage=currentLanguage==="zh"?"en":"zh";
+    localStorage.setItem(LANGUAGE_KEY,currentLanguage);
+    applyLanguage();
+  }
   const $$ = (sel) => [...document.querySelectorAll(sel)];
 
   const TYPE = {
@@ -532,6 +580,7 @@
   }
 
   function bindUI() {
+    $("languageToggleBtn").addEventListener("click", toggleLanguage);
     $$(".quick-btn").forEach(btn => btn.addEventListener("click", () => openLog(btn.dataset.type)));
 
     $("customTimeBtn").addEventListener("click", () => {
@@ -677,5 +726,8 @@
     }, 60000);
   }
 
-  start();
+  const languageObserver = new MutationObserver(() => requestAnimationFrame(applyLanguage));
+  languageObserver.observe(document.body, { childList: true, subtree: true, characterData: true });
+
+  start().finally(() => applyLanguage());
 })();
