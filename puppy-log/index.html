@@ -1,267 +1,247 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#f7f4ee" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Puppy Log" />
-  <title>Puppy Log · 小狗成长日志</title>
-  <link rel="manifest" href="./manifest.webmanifest" />
-  <link rel="stylesheet" href="./styles.css?v=2" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#f7f4ee" name="theme-color"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Puppy Log" name="apple-mobile-web-app-title"/>
+<title>Puppy Log · 小狗成长日志</title>
+<link href="./manifest.webmanifest?v=6" rel="manifest"/>
+<link href="./styles.css?v=6" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  <div id="toast" class="toast" aria-live="polite"></div>
-
-  <header class="topbar">
-    <div class="title-block">
-      <div class="eyebrow">SHARED PUPPY JOURNAL</div>
-      <h1><span id="petNameTitle">Puppy</span> Log <span aria-hidden="true">🐕</span></h1>
-      <div id="petSwitcher" class="pet-switcher" aria-label="切换小狗"></div>
-    </div>
-    <div class="top-actions">
-      <button id="languageToggleBtn" class="icon-btn" type="button" aria-label="Switch to English">EN</button>
-      <span id="syncPill" class="pill">演示模式</span>
-      <button id="settingsBtn" class="icon-btn hidden" aria-label="设置">⚙︎</button>
-    </div>
-  </header>
-
-  <main class="shell">
-    <section id="demoBanner" class="banner">
-      <strong>现在是本机演示模式。</strong>
-      界面可以直接试用，但两台手机还不会同步。连接 Supabase 后会自动变成你们俩共享的云端日志。
+<div aria-live="polite" class="toast" id="toast"></div>
+<header class="topbar">
+<div class="title-block">
+<div class="eyebrow" data-i18n="eyebrowJournal">共享小狗日志</div>
+<h1><span id="petNameTitle">Puppy</span> Log <span aria-hidden="true">🐕</span></h1>
+<div aria-label="切换小狗" class="pet-switcher" data-i18n-aria-label="switchDog" id="petSwitcher"></div>
+</div>
+<div class="top-actions">
+<button aria-label="切换为英文" class="icon-btn" data-i18n-aria-label="switchLanguage" id="languageToggleBtn" type="button">EN</button>
+<span class="pill" id="syncPill">演示模式</span>
+<button aria-label="设置" class="icon-btn hidden" data-i18n-aria-label="settings" id="settingsBtn">⚙︎</button>
+</div>
+</header>
+<main class="shell">
+<section class="banner" id="demoBanner">
+<strong data-i18n="demoHeading">现在是本机演示模式。</strong>
+      <span data-i18n="demoDescription">界面可以直接试用，但两台手机还不会同步。连接 Supabase 后会自动变成你们俩共享的云端日志。</span>
     </section>
+<section class="panel auth-panel hidden" id="authView">
+<div class="panel-title">
+<div>
+<div class="eyebrow" data-i18n="eyebrowAuth">私人空间</div>
+<h2 data-i18n="signInHeading">登录你们的小狗日志</h2>
+</div>
+</div>
+<div class="segmented">
+<button class="seg active" data-auth-mode="signin" data-i18n="signIn">登录</button>
+<button class="seg" data-auth-mode="signup" data-i18n="signUp">注册</button>
+</div>
+<form class="form-stack" id="authForm">
+<label><span data-i18n="email">邮箱</span>
+          <input autocomplete="email" id="authEmail" placeholder="you@example.com" required="" type="email"/>
+</label>
+<label><span data-i18n="password">密码</span>
+          <input autocomplete="current-password" data-i18n-placeholder="passwordPlaceholder" id="authPassword" minlength="6" placeholder="至少 6 位" required="" type="password"/>
+</label>
+<button class="primary" id="authSubmitBtn" type="submit">登录</button>
+</form>
+<button class="text-btn" data-i18n="forgotPassword" id="forgotPasswordBtn" type="button">忘记密码？</button>
+<p class="hint" id="authHint"></p>
+</section>
+<section class="panel auth-panel hidden" id="recoveryView">
+<div class="panel-title"><div>
+<div class="eyebrow" data-i18n="eyebrowRecovery">密码重置</div><h2 data-i18n="recoveryHeading">设置新密码</h2>
+</div></div>
+<form class="form-stack" id="recoveryForm">
+<label><span data-i18n="newPassword">新密码</span>
+          <input autocomplete="new-password" data-i18n-placeholder="passwordPlaceholder" id="recoveryPassword" minlength="6" placeholder="至少 6 位" required="" type="password"/>
+</label>
+<label><span data-i18n="confirmPassword">再次输入新密码</span>
+          <input autocomplete="new-password" data-i18n-placeholder="confirmPassword" id="recoveryPasswordConfirm" minlength="6" placeholder="再次输入新密码" required="" type="password"/>
+</label>
+<button class="primary" data-i18n="updatePassword" type="submit">更新密码</button>
+</form>
+<p class="hint" data-i18n="recoveryHint">设置成功后，你可以继续使用 Puppy Log。</p>
+</section>
+<section class="panel hidden" id="onboardingView">
+<div class="panel-title">
+<div>
+<div class="eyebrow" data-i18n="eyebrowSetup">首次设置</div>
+<h2 data-i18n="onboardingHeading">建立你们的共享空间</h2>
+</div>
+</div>
+<div class="onboarding-grid">
+<form class="mini-card form-stack hidden" id="createHouseholdForm">
+<h3 data-i18n="firstSetup">第一次设置</h3>
+<label><span data-i18n="displayName">你的显示名字</span>
+            <input data-i18n-placeholder="displayNameExample" id="createDisplayName" placeholder="例如 Li / Mom" required=""/>
+</label>
+<label><span data-i18n="householdName">家庭空间名字</span>
+            <input id="householdName" required="" value="Our Puppy"/>
+</label>
+<label><span data-i18n="firstDogName">第一只小狗名字</span>
+            <input data-i18n-placeholder="petNamePlaceholder" id="petNameInput" placeholder="小狗名字" required=""/>
+</label>
+<button class="primary" data-i18n="createJournal" type="submit">创建共享日志</button>
+</form>
+<form class="mini-card form-stack" id="joinHouseholdForm">
+<h3 data-i18n="joinFamily">加入已有家庭</h3>
+<label><span data-i18n="displayName">你的显示名字</span>
+            <input data-i18n-placeholder="partnerNameExample" id="joinDisplayName" placeholder="例如 Dad" required=""/>
+</label>
+<label><span data-i18n="inviteCode">家庭邀请码</span>
+            <input autocapitalize="characters" data-i18n-placeholder="inviteCodeExample" id="inviteCodeInput" placeholder="8 位邀请码" required=""/>
+</label>
+<button class="secondary" data-i18n="joinJournal" type="submit">加入共享日志</button>
+</form>
+</div>
+</section>
+<section id="appView">
+<section aria-label="最近状态" class="status-grid" data-i18n-aria-label="recentStatus">
+<article class="status-card">
+<span class="status-icon">💧</span>
+<div><small data-i18n="lastPee">上次小便</small><strong id="lastPee">—</strong></div>
+</article>
+<article class="status-card">
+<span class="status-icon">💩</span>
+<div><small data-i18n="lastPoop">上次大便</small><strong id="lastPoop">—</strong></div>
+</article>
+<article class="status-card">
+<span class="status-icon">🍽️</span>
+<div><small data-i18n="lastMeal">上次吃饭</small><strong id="lastMeal">—</strong></div>
+</article>
+<article class="status-card">
+<span class="status-icon">⚖️</span>
+<div><small data-i18n="latestWeight">最新体重</small><strong id="latestWeight">—</strong></div>
+</article>
+</section>
+<section class="panel quick-panel">
+<div class="panel-title">
+<div>
+<div class="eyebrow" data-i18n="eyebrowQuick">快捷记录</div>
+<h2 data-i18n="quickHeading">刚刚发生了什么？</h2>
+</div>
 
-    <section id="authView" class="panel auth-panel hidden">
-      <div class="panel-title">
-        <div>
-          <div class="eyebrow">PRIVATE ACCESS</div>
-          <h2>登录你们的小狗日志</h2>
-        </div>
-      </div>
-      <div class="segmented">
-        <button class="seg active" data-auth-mode="signin">登录</button>
-        <button class="seg" data-auth-mode="signup">注册</button>
-      </div>
-      <form id="authForm" class="form-stack">
-        <label>邮箱
-          <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com" />
-        </label>
-        <label>密码
-          <input id="authPassword" type="password" autocomplete="current-password" minlength="6" required placeholder="至少 6 位" />
-        </label>
-        <button id="authSubmitBtn" class="primary" type="submit">登录</button>
-      </form>
-      <button id="forgotPasswordBtn" class="text-btn" type="button">忘记密码？</button>
-      <p id="authHint" class="hint"></p>
-    </section>
-
-    <section id="recoveryView" class="panel auth-panel hidden">
-      <div class="panel-title"><div>
-        <div class="eyebrow">PASSWORD RECOVERY</div><h2>设置新密码</h2>
-      </div></div>
-      <form id="recoveryForm" class="form-stack">
-        <label>新密码
-          <input id="recoveryPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="至少 6 位" />
-        </label>
-        <label>再次输入新密码
-          <input id="recoveryPasswordConfirm" type="password" autocomplete="new-password" minlength="6" required placeholder="再次输入新密码" />
-        </label>
-        <button class="primary" type="submit">更新密码</button>
-      </form>
-      <p class="hint">设置成功后，你可以继续使用 Puppy Log。</p>
-    </section>
-
-    <section id="onboardingView" class="panel hidden">
-      <div class="panel-title">
-        <div>
-          <div class="eyebrow">ONE-TIME SETUP</div>
-          <h2>建立你们的共享空间</h2>
-        </div>
-      </div>
-      <div class="onboarding-grid">
-        <form id="createHouseholdForm" class="mini-card form-stack hidden">
-          <h3>第一次设置</h3>
-          <label>你的显示名字
-            <input id="createDisplayName" required placeholder="例如 Li / Mom" />
-          </label>
-          <label>家庭空间名字
-            <input id="householdName" required value="Our Puppy" />
-          </label>
-          <label>第一只小狗名字
-            <input id="petNameInput" required placeholder="Puppy name" />
-          </label>
-          <button class="primary" type="submit">创建共享日志</button>
-        </form>
-
-        <form id="joinHouseholdForm" class="mini-card form-stack">
-          <h3>加入已有家庭</h3>
-          <label>你的显示名字
-            <input id="joinDisplayName" required placeholder="例如 Dad" />
-          </label>
-          <label>家庭邀请码
-            <input id="inviteCodeInput" required autocapitalize="characters" placeholder="8 位邀请码" />
-          </label>
-          <button class="secondary" type="submit">加入共享日志</button>
-        </form>
-      </div>
-    </section>
-
-    <section id="appView">
-      <section class="status-grid" aria-label="最近状态">
-        <article class="status-card">
-          <span class="status-icon">💧</span>
-          <div><small>上次小便</small><strong id="lastPee">—</strong></div>
-        </article>
-        <article class="status-card">
-          <span class="status-icon">💩</span>
-          <div><small>上次大便</small><strong id="lastPoop">—</strong></div>
-        </article>
-        <article class="status-card">
-          <span class="status-icon">🍽️</span>
-          <div><small>上次吃饭</small><strong id="lastMeal">—</strong></div>
-        </article>
-        <article class="status-card">
-          <span class="status-icon">⚖️</span>
-          <div><small>最新体重</small><strong id="latestWeight">—</strong></div>
-        </article>
-      </section>
-
-      <section class="panel quick-panel">
-        <div class="panel-title">
-          <div>
-            <div class="eyebrow">QUICK LOG</div>
-            <h2>刚刚发生了什么？</h2>
-          </div>
-          <button id="customTimeBtn" class="text-btn">补记过去时间</button>
-        </div>
-
-        <div class="quick-grid">
-          <button class="quick-btn" data-type="pee"><span>💧</span><b>小便</b></button>
-          <button class="quick-btn" data-type="poop"><span>💩</span><b>大便</b></button>
-          <button class="quick-btn" data-type="meal"><span>🍽️</span><b>吃饭</b></button>
-          <button class="quick-btn" data-type="water"><span>🥤</span><b>喝水</b></button>
-          <button class="quick-btn" data-type="weight"><span>⚖️</span><b>体重</b></button>
-          <button class="quick-btn" data-type="note"><span>📝</span><b>备注</b></button>
-        </div>
-      </section>
-
-      <section class="summary-row">
-        <article class="mini-stat"><small>今天小便</small><strong id="todayPee">0</strong><span>次</span></article>
-        <article class="mini-stat"><small>今天大便</small><strong id="todayPoop">0</strong><span>次</span></article>
-        <article class="mini-stat"><small>今天吃饭</small><strong id="todayMeal">0</strong><span>次</span></article>
-        <article class="mini-stat"><small>今天喝水</small><strong id="todayWater">0</strong><span>次</span></article>
-      </section>
-
-      <section class="panel">
-        <div class="panel-title">
-          <div>
-            <div class="eyebrow">HANDOFF</div>
-            <h2>最近记录</h2>
-          </div>
-          <div class="filter-wrap">
-            <button class="filter-btn active" data-filter="all">全部</button>
-            <button class="filter-btn" data-filter="today">今天</button>
-          </div>
-        </div>
-        <div id="timeline" class="timeline"></div>
-        <button id="loadMoreBtn" class="secondary full hidden">加载更早记录</button>
-      </section>
-    </section>
-  </main>
-
-  <dialog id="logDialog">
-    <form id="logForm" method="dialog" class="dialog-card">
-      <div class="dialog-head">
-        <div>
-          <div id="dialogEyebrow" class="eyebrow">ADD EVENT</div>
-          <h2 id="dialogTitle">记录</h2>
-          <div id="dialogPetName" class="dialog-pet-name"></div>
-        </div>
-        <button id="closeDialogBtn" class="icon-btn" type="button" aria-label="关闭">×</button>
-      </div>
-
-      <input id="eventType" type="hidden" />
-      <label>时间
-        <input id="eventTime" type="datetime-local" required />
-      </label>
-
-      <div id="amountRow" class="two-col hidden">
-        <label>数量
-          <input id="eventAmount" type="number" inputmode="decimal" step="0.01" min="0" placeholder="可选" />
-        </label>
-        <label>单位
+</div>
+<div class="quick-grid">
+<button class="quick-btn" data-type="pee"><span>💧</span><b data-i18n="pee">小便</b></button>
+<button class="quick-btn" data-type="poop"><span>💩</span><b data-i18n="poop">大便</b></button>
+<button class="quick-btn" data-type="meal"><span>🍽️</span><b data-i18n="meal">吃饭</b></button>
+<button class="quick-btn" data-type="water"><span>🥤</span><b data-i18n="water">喝水</b></button>
+<button class="quick-btn" data-type="weight"><span>⚖️</span><b data-i18n="weight">体重</b></button>
+<button class="quick-btn" data-type="note"><span>📝</span><b data-i18n="note">备注</b></button>
+</div>
+</section>
+<section class="summary-row">
+<article class="mini-stat"><small data-i18n="todayPee">今天小便</small><strong id="todayPee">0</strong><span data-i18n="countUnit">次</span></article>
+<article class="mini-stat"><small data-i18n="todayPoop">今天大便</small><strong id="todayPoop">0</strong><span data-i18n="countUnit">次</span></article>
+<article class="mini-stat"><small data-i18n="todayMeal">今天吃饭</small><strong id="todayMeal">0</strong><span data-i18n="countUnit">次</span></article>
+<article class="mini-stat"><small data-i18n="todayWater">今天喝水</small><strong id="todayWater">0</strong><span data-i18n="countUnit">次</span></article>
+</section>
+<section class="panel">
+<div class="panel-title">
+<div>
+<div class="eyebrow" data-i18n="eyebrowHandoff">照护交接</div>
+<h2 data-i18n="recentActivity">最近记录</h2>
+</div>
+<div class="filter-wrap">
+<button class="filter-btn active" data-filter="all" data-i18n="all">全部</button>
+<button class="filter-btn" data-filter="today" data-i18n="today">今天</button>
+</div>
+</div>
+<div class="timeline" id="timeline"></div>
+<button class="secondary full hidden" data-i18n="loadEarlier" id="loadMoreBtn">加载更早记录</button>
+</section>
+</section>
+</main>
+<dialog id="logDialog">
+<form class="dialog-card" id="logForm" method="dialog">
+<div class="dialog-head">
+<div>
+<div class="eyebrow" data-i18n="eyebrowAdd" id="dialogEyebrow">添加记录</div>
+<h2 id="dialogTitle">记录</h2>
+<div class="dialog-pet-name" id="dialogPetName"></div>
+</div>
+<button aria-label="关闭" class="icon-btn" data-i18n-aria-label="close" id="closeDialogBtn" type="button">×</button>
+</div>
+<input id="eventType" type="hidden"/>
+<label><span data-i18n="time">时间</span>
+        <input id="eventTime" required="" type="datetime-local"/>
+</label>
+<div class="two-col hidden" id="amountRow">
+<label><span data-i18n="amount">数量</span>
+          <input data-i18n-placeholder="optional" id="eventAmount" inputmode="decimal" min="0" placeholder="可选" step="0.01" type="number"/>
+</label>
+<label><span data-i18n="unit">单位</span>
           <select id="eventUnit">
-            <option value="">—</option>
-          </select>
-        </label>
-      </div>
-
-      <label>备注
-        <textarea id="eventNote" rows="3" placeholder="可选，例如：饭吃完了 / 便便偏软"></textarea>
-      </label>
-
-      <div class="dialog-actions">
-        <button id="cancelDialogBtn" class="secondary" type="button">取消</button>
-        <button class="primary" type="submit">保存记录</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog id="settingsDialog">
-    <div class="dialog-card">
-      <div class="dialog-head">
-        <div>
-          <div class="eyebrow">SETTINGS</div>
-          <h2>共享空间</h2>
-        </div>
-        <button id="closeSettingsBtn" class="icon-btn" type="button" aria-label="关闭">×</button>
-      </div>
-
-      <div class="settings-list">
-        <div><small>家庭空间</small><strong id="settingsHousehold">—</strong></div>
-        <div><small>你现在的名字</small><strong id="settingsMe">—</strong></div>
-        <div><small>邀请另一位</small><strong id="settingsInvite">—</strong></div>
-      </div>
-
-      <div class="pet-settings">
-        <div class="pet-settings-head">
-          <div>
-            <small>小狗管理</small>
-            <strong>切换或添加小狗</strong>
-          </div>
-          <button id="addPetBtn" class="secondary compact" type="button">＋ 添加</button>
-        </div>
-        <div id="settingsPetList" class="settings-pet-list"></div>
-      </div>
-
-      <p class="hint">每只小狗的大小便、吃饭、喝水和体重会分别保存。你和家人看到的是同一组小狗和同一份云端记录。</p>
-      <button id="signOutBtn" class="danger full">退出登录</button>
-    </div>
-  </dialog>
-
-  <dialog id="addPetDialog">
-    <form id="addPetForm" class="dialog-card">
-      <div class="dialog-head">
-        <div>
-          <div class="eyebrow">ADD PET</div>
-          <h2>添加另一只小狗</h2>
-        </div>
-        <button id="closeAddPetBtn" class="icon-btn" type="button" aria-label="关闭">×</button>
-      </div>
-      <label>小狗名字
-        <input id="newPetName" required maxlength="50" autocomplete="off" placeholder="例如 Douby" />
-      </label>
-      <div class="dialog-actions">
-        <button id="cancelAddPetBtn" class="secondary" type="button">取消</button>
-        <button class="primary" type="submit">添加并切换</button>
-      </div>
-    </form>
-  </dialog>
-
-  <script src="./config.js"></script>
-  <script src="./app.js?v=5"></script>
+<option value="">—</option>
+</select>
+</label>
+</div>
+<label><span data-i18n="note">备注</span>
+        <textarea data-i18n-placeholder="notePlaceholder" id="eventNote" placeholder="可选，例如：饭吃完了 / 便便偏软" rows="3"></textarea>
+</label>
+<div class="dialog-actions">
+<button class="secondary" data-i18n="cancel" id="cancelDialogBtn" type="button">取消</button>
+<button class="primary" data-i18n="saveRecord" type="submit">保存记录</button>
+</div>
+</form>
+</dialog>
+<dialog id="settingsDialog">
+<div class="dialog-card">
+<div class="dialog-head">
+<div>
+<div class="eyebrow" data-i18n="eyebrowSettings">设置</div>
+<h2 data-i18n="sharedSpace">共享空间</h2>
+</div>
+<button aria-label="关闭" class="icon-btn" data-i18n-aria-label="close" id="closeSettingsBtn" type="button">×</button>
+</div>
+<div class="settings-list">
+<div><small data-i18n="familySpace">家庭空间</small><strong id="settingsHousehold">—</strong></div>
+<div><small data-i18n="currentName">你现在的名字</small><strong id="settingsMe">—</strong></div>
+<div><small data-i18n="inviteMember">邀请另一位</small><strong id="settingsInvite">—</strong></div>
+</div>
+<div class="pet-settings">
+<div class="pet-settings-head">
+<div>
+<small data-i18n="dogs">小狗管理</small>
+<strong data-i18n="switchOrAddDog">切换或添加小狗</strong>
+</div>
+<button class="secondary compact" data-i18n="addButton" id="addPetBtn" type="button">＋ 添加</button>
+</div>
+<div class="settings-pet-list" id="settingsPetList"></div>
+</div>
+<p class="hint" data-i18n="sharedHint">每只小狗的大小便、吃饭、喝水和体重会分别保存。你和家人看到的是同一组小狗和同一份云端记录。</p>
+<button class="danger full" data-i18n="signOut" id="signOutBtn">退出登录</button>
+</div>
+</dialog>
+<dialog id="addPetDialog">
+<form class="dialog-card" id="addPetForm">
+<div class="dialog-head">
+<div>
+<div class="eyebrow" data-i18n="eyebrowAddDog">添加小狗</div>
+<h2 data-i18n="addDogHeading">添加另一只小狗</h2>
+</div>
+<button aria-label="关闭" class="icon-btn" data-i18n-aria-label="close" id="closeAddPetBtn" type="button">×</button>
+</div>
+<label><span data-i18n="dogName">小狗名字</span>
+        <input autocomplete="off" data-i18n-placeholder="petNameExample" id="newPetName" maxlength="50" placeholder="例如 Douby" required=""/>
+</label>
+<div class="dialog-actions">
+<button class="secondary" data-i18n="cancel" id="cancelAddPetBtn" type="button">取消</button>
+<button class="primary" data-i18n="addAndSwitch" type="submit">添加并切换</button>
+</div>
+</form>
+</dialog>
+<script src="./config.js"></script>
+<script src="./app.js?v=6"></script>
 </body>
 </html>
+

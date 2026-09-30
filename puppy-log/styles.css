@@ -110,3 +110,8 @@ dialog::backdrop{background:rgba(30,28,24,.36);backdrop-filter:blur(2px)}
   .event-row{grid-template-columns:44px 1fr auto;gap:9px}
   .pill{display:none}
 }
+
+/* Recorder names and user notes may be long on a phone. */
+.event-main{min-width:0}
+.event-main .meta,.event-note{overflow-wrap:anywhere}
+.recorder-name{font-weight:650;color:var(--ink)}

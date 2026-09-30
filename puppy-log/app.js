@@ -11,61 +11,346 @@
   const $ = (id) => document.getElementById(id);
 
   const LANGUAGE_KEY = "puppy-log-language";
-  let currentLanguage = localStorage.getItem(LANGUAGE_KEY) || "zh";
-  const T = new Map([
-    ["演示模式","Demo mode"],["云端同步","Cloud sync"],["登录你们的小狗日志","Sign in to your puppy log"],
-    ["登录","Sign in"],["注册","Sign up"],["邮箱","Email"],["密码","Password"],["至少 6 位","At least 6 characters"],
-    ["忘记密码？","Forgot password?"],["每位家庭成员使用自己的账号登录，但加入同一个家庭空间。","Each family member uses their own account and joins the same family space."],
-    ["设置新密码","Set a new password"],["新密码","New password"],["再次输入新密码","Confirm new password"],
-    ["更新密码","Update password"],["设置成功后，你可以继续使用 Puppy Log。","After updating your password, you can continue using Puppy Log."],
-    ["加入 Puppy Log 家庭","Join a Puppy Log family"],["加入已有家庭","Join an existing family"],
-    ["你的显示名字","Your display name"],["家庭邀请码","Family invite code"],["加入共享日志","Join shared log"],
-    ["已有邀请码的家庭成员从这里加入。","Family members with an invite code can join here."],
-    ["上次小便","Last pee"],["上次大便","Last poop"],["上次吃饭","Last meal"],["最新体重","Latest weight"],
-    ["刚刚发生了什么？","What just happened?"],["补记过去时间","Log a past time"],
-    ["小便","Pee"],["大便","Poop"],["吃饭","Meal"],["喝水","Water"],["体重","Weight"],["备注","Note"],
-    ["今天小便","Pee today"],["今天大便","Poop today"],["今天吃饭","Meals today"],["今天喝水","Water today"],
-    ["最近记录","Recent activity"],["全部","All"],["今天","Today"],["共享空间","Shared space"],
-    ["家庭空间","Family space"],["你现在的名字","Your display name"],["邀请家庭成员","Invite family member"],
-    ["小狗管理","Dogs"],["切换或添加小狗","Switch or add a dog"],["＋ 添加","+ Add"],["退出登录","Sign out"],
-    ["取消","Cancel"],["保存","Save"],["记录","Log"],["时间","Time"],["补充说明","Details"],
-    ["记录时间","Log time"],["小狗名字","Dog name"],["例如：Douby","e.g. Douby"],["添加","Add"],
-    ["暂无","None yet"],["次"," times"],["分钟前"," min ago"],["小时前"," hr ago"],["天前"," days ago"]
-  ]);
+  let currentLanguage = localStorage.getItem(LANGUAGE_KEY) === "en" ? "en" : "zh";
+  const I18N = {
+  "zh": {
+    "demoMode": "演示模式",
+    "localDemo": "本机演示",
+    "cloudSync": "云端同步",
+    "demoHeading": "现在是本机演示模式。",
+    "demoDescription": "界面可以直接试用，但两台手机还不会同步。连接 Supabase 后会自动变成你们俩共享的云端日志。",
+    "signInHeading": "登录你们的小狗日志",
+    "signIn": "登录",
+    "signUp": "注册",
+    "email": "邮箱",
+    "password": "密码",
+    "passwordPlaceholder": "至少 6 位",
+    "forgotPassword": "忘记密码？",
+    "authMembers": "每位家庭成员使用自己的账号登录，但加入同一个家庭空间。",
+    "recoveryHeading": "设置新密码",
+    "newPassword": "新密码",
+    "confirmPassword": "再次输入新密码",
+    "updatePassword": "更新密码",
+    "recoveryHint": "设置成功后，你可以继续使用 Puppy Log。",
+    "onboardingHeading": "建立你们的共享空间",
+    "firstSetup": "第一次设置",
+    "displayName": "你的显示名字",
+    "householdName": "家庭空间名字",
+    "firstDogName": "第一只小狗名字",
+    "createJournal": "创建共享日志",
+    "joinFamily": "加入已有家庭",
+    "inviteCode": "家庭邀请码",
+    "joinJournal": "加入共享日志",
+    "displayNameExample": "例如 Li / Mom",
+    "partnerNameExample": "例如 Dad",
+    "inviteCodeExample": "8 位邀请码",
+    "petNameExample": "例如 Douby",
+    "petNamePlaceholder": "小狗名字",
+    "lastPee": "上次小便",
+    "lastPoop": "上次大便",
+    "lastMeal": "上次吃饭",
+    "latestWeight": "最新体重",
+    "quickHeading": "刚刚发生了什么？",
+    "pee": "小便",
+    "poop": "大便",
+    "meal": "吃饭",
+    "water": "喝水",
+    "weight": "体重",
+    "note": "备注",
+    "todayPee": "今天小便",
+    "todayPoop": "今天大便",
+    "todayMeal": "今天吃饭",
+    "todayWater": "今天喝水",
+    "countUnit": "次",
+    "countOne": "次",
+    "recentActivity": "最近记录",
+    "all": "全部",
+    "today": "今天",
+    "yesterday": "昨天",
+    "loadEarlier": "加载更早记录",
+    "log": "记录",
+    "time": "时间",
+    "amount": "数量",
+    "unit": "单位",
+    "optional": "可选",
+    "notePlaceholder": "可选，例如：饭吃完了 / 便便偏软",
+    "cancel": "取消",
+    "saveRecord": "保存记录",
+    "sharedSpace": "共享空间",
+    "familySpace": "家庭空间",
+    "currentName": "你现在的名字",
+    "inviteMember": "邀请另一位",
+    "dogs": "小狗管理",
+    "switchOrAddDog": "切换或添加小狗",
+    "addButton": "＋ 添加",
+    "signOut": "退出登录",
+    "sharedHint": "每只小狗的大小便、吃饭、喝水和体重会分别保存。你和家人看到的是同一组小狗和同一份云端记录。",
+    "addDogHeading": "添加另一只小狗",
+    "dogName": "小狗名字",
+    "addAndSwitch": "添加并切换",
+    "switchDog": "切换小狗",
+    "settings": "设置",
+    "recentStatus": "最近状态",
+    "close": "关闭",
+    "switchLanguage": "切换为英文",
+    "noneYet": "暂无",
+    "justNow": "刚刚",
+    "minutesAgo": "{count} 分钟前",
+    "hoursAgo": "{count} 小时前",
+    "hoursMinutesAgo": "{hours} 小时 {minutes} 分钟前",
+    "oneDayAgo": "1 天前",
+    "daysAgo": "{count} 天前",
+    "pageTitle": "{pet} Log · 小狗成长日志",
+    "noDogs": "还没有小狗。",
+    "thisDog": "这只小狗",
+    "emptyTimeline": "{pet} 还没有记录。",
+    "firstRecordHint": "点上面的按钮记下第一条吧。",
+    "recordedBy": "记录人：",
+    "unknownRecorder": "未知",
+    "me": "我",
+    "partner": "另一位",
+    "delete": "删除",
+    "deleteConfirm": "删除这条记录？",
+    "addDogFirst": "请先添加一只小狗",
+    "logFor": "记录给 {pet}",
+    "savedTo": "已保存到 {pet}",
+    "syncedTo": "已同步到 {pet}",
+    "dogAdded": "已添加 {pet}",
+    "enterEmail": "请先输入你的邮箱",
+    "resetEmailSent": "重置邮件已发送，请检查邮箱",
+    "resetEmailHint": "请打开邮件里的重置密码链接，然后回到这里设置新密码。",
+    "passwordMismatch": "两次输入的密码不一致",
+    "passwordUpdated": "密码已更新",
+    "signupConfirm": "注册成功，请先去邮箱点确认链接",
+    "householdCreated": "创建成功，邀请码 {code}",
+    "joinedJournal": "已加入共享日志",
+    "signInRequired": "请先登录，再保存记录。",
+    "requestFailed": "操作未完成，请重试。详细错误已保留在浏览器控制台。",
+    "unitCan": "罐",
+    "unitCans": "罐",
+    "unitServing": "份",
+    "unitServings": "份",
+    "unitCup": "杯",
+    "unitCups": "杯",
+    "eyebrowJournal": "共享小狗日志",
+    "eyebrowAuth": "私人空间",
+    "eyebrowRecovery": "密码重置",
+    "eyebrowSetup": "首次设置",
+    "eyebrowQuick": "快捷记录",
+    "eyebrowHandoff": "照护交接",
+    "eyebrowAdd": "添加记录",
+    "eyebrowSettings": "设置",
+    "eyebrowAddDog": "添加小狗"
+  },
+  "en": {
+    "demoMode": "Demo mode",
+    "localDemo": "Local demo",
+    "cloudSync": "Cloud sync",
+    "demoHeading": "You are using local demo mode.",
+    "demoDescription": "You can try the interface now, but devices do not sync yet. Connect Supabase to share the cloud journal with your family.",
+    "signInHeading": "Sign in to your puppy log",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "passwordPlaceholder": "At least 6 characters",
+    "forgotPassword": "Forgot password?",
+    "authMembers": "Each family member uses their own account and joins the same family space.",
+    "recoveryHeading": "Set a new password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "updatePassword": "Update password",
+    "recoveryHint": "After updating your password, you can continue using Puppy Log.",
+    "onboardingHeading": "Set up your shared space",
+    "firstSetup": "First-time setup",
+    "displayName": "Your display name",
+    "householdName": "Family space name",
+    "firstDogName": "First dog’s name",
+    "createJournal": "Create shared journal",
+    "joinFamily": "Join an existing family",
+    "inviteCode": "Family invite code",
+    "joinJournal": "Join shared journal",
+    "displayNameExample": "e.g. Li / Mom",
+    "partnerNameExample": "e.g. Dad",
+    "inviteCodeExample": "8-character invite code",
+    "petNameExample": "e.g. Douby",
+    "petNamePlaceholder": "Dog name",
+    "lastPee": "Last pee",
+    "lastPoop": "Last poop",
+    "lastMeal": "Last meal",
+    "latestWeight": "Latest weight",
+    "quickHeading": "What just happened?",
+    "pee": "Pee",
+    "poop": "Poop",
+    "meal": "Meal",
+    "water": "Water",
+    "weight": "Weight",
+    "note": "Note",
+    "todayPee": "Pee today",
+    "todayPoop": "Poop today",
+    "todayMeal": "Meals today",
+    "todayWater": "Water today",
+    "countUnit": "logs",
+    "countOne": "log",
+    "recentActivity": "Recent activity",
+    "all": "All",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "loadEarlier": "Load earlier records",
+    "log": "Log",
+    "time": "Time",
+    "amount": "Amount",
+    "unit": "Unit",
+    "optional": "Optional",
+    "notePlaceholder": "Optional, e.g. finished the meal / soft stool",
+    "cancel": "Cancel",
+    "saveRecord": "Save record",
+    "sharedSpace": "Shared space",
+    "familySpace": "Family space",
+    "currentName": "Your display name",
+    "inviteMember": "Invite a family member",
+    "dogs": "Dogs",
+    "switchOrAddDog": "Switch or add a dog",
+    "addButton": "+ Add",
+    "signOut": "Sign out",
+    "sharedHint": "Each dog has separate pee, poop, meal, water, and weight records. You and your family share the same dogs and cloud journal.",
+    "addDogHeading": "Add another dog",
+    "dogName": "Dog name",
+    "addAndSwitch": "Add and switch",
+    "switchDog": "Switch dog",
+    "settings": "Settings",
+    "recentStatus": "Recent status",
+    "close": "Close",
+    "switchLanguage": "Switch to Chinese",
+    "noneYet": "None yet",
+    "justNow": "Just now",
+    "minutesAgo": "{count} min ago",
+    "hoursAgo": "{count} hr ago",
+    "hoursMinutesAgo": "{hours} hr {minutes} min ago",
+    "oneDayAgo": "1 day ago",
+    "daysAgo": "{count} days ago",
+    "pageTitle": "{pet} Log · Puppy journal",
+    "noDogs": "No dogs yet.",
+    "thisDog": "This dog",
+    "emptyTimeline": "No records for {pet} yet.",
+    "firstRecordHint": "Use a button above to add the first record.",
+    "recordedBy": "Recorded by:",
+    "unknownRecorder": "Unknown",
+    "me": "Me",
+    "partner": "Partner",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this record?",
+    "addDogFirst": "Please add a dog first.",
+    "logFor": "Log for {pet}",
+    "savedTo": "Saved to {pet}",
+    "syncedTo": "Synced to {pet}",
+    "dogAdded": "Added {pet}",
+    "enterEmail": "Please enter your email first.",
+    "resetEmailSent": "Password reset email sent. Check your inbox.",
+    "resetEmailHint": "Open the password reset link in your email, then return here to set a new password.",
+    "passwordMismatch": "The passwords do not match.",
+    "passwordUpdated": "Password updated.",
+    "signupConfirm": "Account created. Check your email for the confirmation link.",
+    "householdCreated": "Shared space created. Invite code: {code}",
+    "joinedJournal": "Joined the shared journal.",
+    "signInRequired": "Please sign in before saving a record.",
+    "requestFailed": "The request could not be completed. Please try again. Error details are available in the browser console.",
+    "unitCan": "can",
+    "unitCans": "cans",
+    "unitServing": "serving",
+    "unitServings": "servings",
+    "unitCup": "cup",
+    "unitCups": "cups",
+    "eyebrowJournal": "SHARED PUPPY JOURNAL",
+    "eyebrowAuth": "PRIVATE ACCESS",
+    "eyebrowRecovery": "PASSWORD RECOVERY",
+    "eyebrowSetup": "ONE-TIME SETUP",
+    "eyebrowQuick": "QUICK LOG",
+    "eyebrowHandoff": "HANDOFF",
+    "eyebrowAdd": "ADD EVENT",
+    "eyebrowSettings": "SETTINGS",
+    "eyebrowAddDog": "ADD PET"
+  }
+};
+  let activeToast = null;
 
-  function translateNode(node) {
-    const raw=node.nodeValue, s=raw?.trim();
-    if(!s) return;
-    if(currentLanguage==="en" && T.has(s)) node.nodeValue=raw.replace(s,T.get(s));
-    if(currentLanguage==="zh") for(const [zh,en] of T) if(s===en){node.nodeValue=raw.replace(s,zh);break;}
+  function tr(key, values = {}) {
+    const template = I18N[currentLanguage][key];
+    if (typeof template !== "string") {
+      console.warn("Missing Puppy Log translation:", key);
+      return key;
+    }
+    return template.replace(/\{(\w+)\}/g, (match, name) =>
+      Object.prototype.hasOwnProperty.call(values, name) ? String(values[name]) : match
+    );
   }
-  function applyLanguage() {
-    const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT), nodes=[];
-    while(w.nextNode()) nodes.push(w.currentNode);
-    nodes.forEach(translateNode);
-    document.querySelectorAll("input[placeholder]").forEach(el=>{
-      const p=el.placeholder;
-      if(currentLanguage==="en"&&T.has(p)) el.placeholder=T.get(p);
-      else if(currentLanguage==="zh") for(const [zh,en] of T) if(p===en){el.placeholder=zh;break;}
+
+  function formatUnit(unit, amount = null) {
+    // Keep stored unit values unchanged, including older Chinese unit codes.
+    const plural = amount !== null && Number(amount) !== 1;
+    const keys = {
+      "罐": plural ? "unitCans" : "unitCan",
+      "份": plural ? "unitServings" : "unitServing",
+      "杯": plural ? "unitCups" : "unitCup"
+    };
+    if (keys[unit]) return tr(keys[unit]);
+    if (currentLanguage === "en" && unit === "cup" && plural) return "cups";
+    return unit || "";
+  }
+
+  function renderAuthText() {
+    $("authSubmitBtn").textContent = tr($("authForm").dataset.mode === "signup" ? "signUp" : "signIn");
+    $("authHint").textContent = tr(state.authHint);
+  }
+
+  function renderLogText() {
+    const type = $("eventType").value;
+    const info = TYPE[type];
+    if (!info) {
+      $("dialogTitle").textContent = tr("log");
+      return;
+    }
+    $("dialogTitle").textContent = `${info.icon} ${tr(info.label)}`;
+    $("dialogPetName").textContent = tr("logFor", {pet: state.pet?.name || "Puppy"});
+    // Relabel options without resetting the selected unit or any typed values.
+    [...$("eventUnit").options].forEach(option => {
+      option.textContent = option.value ? formatUnit(option.value) : "—";
     });
-    const b=$("languageToggleBtn");
-    if(b){b.textContent=currentLanguage==="zh"?"EN":"中"; b.setAttribute("aria-label",currentLanguage==="zh"?"Switch to English":"切换到中文");}
-    document.documentElement.lang=currentLanguage==="zh"?"zh-CN":"en";
   }
-  function toggleLanguage(){
-    currentLanguage=currentLanguage==="zh"?"en":"zh";
-    localStorage.setItem(LANGUAGE_KEY,currentLanguage);
+
+  function applyLanguage() {
+    document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      el.textContent = tr(el.dataset.i18n);
+    });
+    ["placeholder", "aria-label", "title"].forEach(attr => {
+      document.querySelectorAll(`[data-i18n-${attr}]`).forEach(el => {
+        el.setAttribute(attr, tr(el.getAttribute(`data-i18n-${attr}`)));
+      });
+    });
+    $("languageToggleBtn").textContent = currentLanguage === "zh" ? "EN" : "ZH";
+    setCloudUI();
+    renderAuthText();
+    renderAll();
+    renderLogText();
+    if (activeToast) $("toast").textContent = tr(activeToast.key, activeToast.values);
+  }
+
+  function toggleLanguage() {
+    currentLanguage = currentLanguage === "zh" ? "en" : "zh";
+    localStorage.setItem(LANGUAGE_KEY, currentLanguage);
     applyLanguage();
   }
+
   const $$ = (sel) => [...document.querySelectorAll(sel)];
 
   const TYPE = {
-    pee:    { label: "小便", icon: "💧", units: [] },
-    poop:   { label: "大便", icon: "💩", units: [] },
-    meal:   { label: "吃饭", icon: "🍽️", units: ["g", "cup", "罐", "份"] },
-    water:  { label: "喝水", icon: "🥤", units: ["mL", "oz", "杯"] },
-    weight: { label: "体重", icon: "⚖️", units: ["lb", "kg"] },
-    note:   { label: "备注", icon: "📝", units: [] }
+    pee:    { label: "pee", icon: "💧", units: [] },
+    poop:   { label: "poop", icon: "💩", units: [] },
+    meal:   { label: "meal", icon: "🍽️", units: ["g", "cup", "罐", "份"] },
+    water:  { label: "water", icon: "🥤", units: ["mL", "oz", "杯"] },
+    weight: { label: "weight", icon: "⚖️", units: ["lb", "kg"] },
+    note:   { label: "note", icon: "📝", units: [] }
   };
 
   const state = {
@@ -81,15 +366,26 @@
     limit: 100,
     channel: null,
     recoveryMode: false,
+    authHint: "authMembers",
     demo: !CLOUD_READY
   };
 
-  function toast(message) {
+  function toast(key, values = {}) {
+    activeToast = {key, values};
     const el = $("toast");
-    el.textContent = message;
+    el.textContent = tr(key, values);
     el.classList.add("show");
     clearTimeout(toast._t);
-    toast._t = setTimeout(() => el.classList.remove("show"), 2200);
+    toast._t = setTimeout(() => {
+      el.classList.remove("show");
+      activeToast = null;
+    }, 3500);
+  }
+
+  function showError(error) {
+    // Server diagnostics are not app translations. Keep the original for debugging.
+    console.error("Puppy Log request failed:", error);
+    toast("requestFailed");
   }
 
   function escapeHtml(value) {
@@ -117,27 +413,47 @@
   function relativeAgo(iso) {
     if (!iso) return "—";
     const diff = Date.now() - new Date(iso).getTime();
-    if (diff < 0) return "刚刚";
     const mins = Math.floor(diff / 60000);
-    if (mins < 1) return "刚刚";
-    if (mins < 60) return `${mins} 分钟前`;
-    const h = Math.floor(mins / 60), m = mins % 60;
-    if (h < 24) return `${h}:${String(m).padStart(2,"0")} 前`;
-    const d = Math.floor(h / 24);
-    return `${d} 天前`;
+    if (mins < 1) return tr("justNow");
+    if (mins < 60) return tr("minutesAgo", {count: mins});
+    const hours = Math.floor(mins / 60), minutes = mins % 60;
+    if (hours < 24) return minutes
+      ? tr("hoursMinutesAgo", {hours, minutes})
+      : tr("hoursAgo", {count: hours});
+    const days = Math.floor(hours / 24);
+    return days === 1 ? tr("oneDayAgo") : tr("daysAgo", {count: days});
   }
 
   function formatClock(iso) {
-    return new Intl.DateTimeFormat("zh-CN", {hour:"numeric", minute:"2-digit"}).format(new Date(iso));
+    return new Intl.DateTimeFormat(currentLanguage === "zh" ? "zh-CN" : "en-US", {
+      hour: "numeric", minute: "2-digit"
+    }).format(new Date(iso));
   }
 
   function formatDate(iso) {
-    const d = new Date(iso);
-    const now = new Date();
-    if (sameLocalDay(d, now)) return "今天";
-    const y = new Date(now); y.setDate(y.getDate()-1);
-    if (sameLocalDay(d, y)) return "昨天";
-    return new Intl.DateTimeFormat("zh-CN", {month:"short", day:"numeric", weekday:"short"}).format(d);
+    const d = new Date(iso), now = new Date();
+    if (sameLocalDay(d, now)) return tr("today");
+    const yesterday = new Date(now); yesterday.setDate(yesterday.getDate() - 1);
+    if (sameLocalDay(d, yesterday)) return tr("yesterday");
+    return new Intl.DateTimeFormat(currentLanguage === "zh" ? "zh-CN" : "en-US", {
+      month: "short", day: "numeric", weekday: "short"
+    }).format(d);
+  }
+
+  function recorderName(event) {
+    const uid = event.user_id;
+    if (!uid) return tr("unknownRecorder");
+    // These two names belong to the demo, not real household members.
+    if (state.demo && uid === "demo-user") return tr("me");
+    if (state.demo && uid === "demo-partner") return tr("partner");
+    const name = Object.prototype.hasOwnProperty.call(state.members, uid)
+      ? state.members[uid] : null;
+    if (typeof name === "string" && name.trim()) return name;
+    if (uid === state.member?.user_id && state.member.display_name?.trim()) {
+      return state.member.display_name;
+    }
+    // Never assign old or unmatched records to the current viewer.
+    return tr("unknownRecorder");
   }
 
   function petStorageKey() {
@@ -150,7 +466,7 @@
 
   function setCloudUI() {
     $("demoBanner").classList.toggle("hidden", !state.demo);
-    $("syncPill").textContent = state.demo ? "本机演示" : "云端同步";
+    $("syncPill").textContent = tr(state.demo ? "localDemo" : "cloudSync");
     $("settingsBtn").classList.toggle("hidden", state.demo || !state.session);
   }
 
@@ -255,7 +571,7 @@
       .eq("user_id", uid)
       .maybeSingle();
 
-    if (error) { toast(error.message); return; }
+    if (error) { showError(error); return; }
     if (!membership) {
       showView("onboarding");
       return;
@@ -268,7 +584,7 @@
       state.supabase.from("puppy_household_members").select("user_id,display_name").eq("household_id", membership.household_id)
     ]);
 
-    if (petsError) { toast(petsError.message); return; }
+    if (petsError) { showError(petsError); return; }
 
     state.household = household;
     state.pets = pets || [];
@@ -292,7 +608,7 @@
       .select("*")
       .eq("household_id", state.household.id)
       .order("created_at");
-    if (error) { toast(error.message); return; }
+    if (error) { showError(error); return; }
     state.pets = data || [];
     if (selectId) {
       state.pet = state.pets.find(p => p.id === selectId) || state.pets[0] || null;
@@ -318,16 +634,23 @@
       return;
     }
 
-    const { data, error } = await state.supabase
-      .from("puppy_events")
-      .select("*")
-      .eq("household_id", state.household.id)
-      .eq("pet_id", state.pet.id)
-      .order("event_time", {ascending:false})
-      .limit(state.limit);
-
-    if (error) { toast(error.message); return; }
-    state.events = data || [];
+    const petId = state.pet.id, householdId = state.household.id;
+    const [eventResult, memberResult] = await Promise.all([
+      state.supabase.from("puppy_events").select("*")
+        .eq("household_id", householdId).eq("pet_id", petId)
+        .order("event_time", {ascending:false}).limit(state.limit),
+      state.supabase.from("puppy_household_members").select("user_id,display_name")
+        .eq("household_id", householdId)
+    ]);
+    // Ignore an obsolete response after switching dogs or signing out.
+    if (state.pet?.id !== petId || state.household?.id !== householdId || !state.session) return;
+    if (eventResult.error) { showError(eventResult.error); return; }
+    if (memberResult.error) {
+      console.warn("Puppy Log member lookup failed:", memberResult.error);
+    } else {
+      state.members = Object.fromEntries((memberResult.data || []).map(m => [m.user_id, m.display_name]));
+    }
+    state.events = eventResult.data || [];
     renderAll();
   }
 
@@ -358,22 +681,22 @@
     `).join("");
 
     switcher.innerHTML = chips + (
-      state.demo ? `<button class="pet-chip add" data-add-pet type="button">＋</button>` : ""
+      state.demo ? `<button class="pet-chip add" data-add-pet type="button" aria-label="${escapeHtml(tr("addDogHeading"))}">＋</button>` : ""
     );
 
-    settings.innerHTML = chips || `<div class="hint">还没有小狗。</div>`;
+    settings.innerHTML = chips || `<div class="hint">${escapeHtml(tr("noDogs"))}</div>`;
   }
 
   function renderAll() {
     const petName = state.pet?.name || "Puppy";
     $("petNameTitle").textContent = petName;
-    document.title = `${petName} Log · 小狗成长日志`;
+    document.title = tr("pageTitle", {pet: petName});
 
     const pee = latest("pee"), poop = latest("poop"), meal = latest("meal"), wt = latest("weight");
-    $("lastPee").textContent = pee ? relativeAgo(pee.event_time) : "暂无";
-    $("lastPoop").textContent = poop ? relativeAgo(poop.event_time) : "暂无";
-    $("lastMeal").textContent = meal ? relativeAgo(meal.event_time) : "暂无";
-    $("latestWeight").textContent = wt ? `${wt.amount ?? "—"} ${wt.unit ?? ""}`.trim() : "暂无";
+    $("lastPee").textContent = pee ? relativeAgo(pee.event_time) : tr("noneYet");
+    $("lastPoop").textContent = poop ? relativeAgo(poop.event_time) : tr("noneYet");
+    $("lastMeal").textContent = meal ? relativeAgo(meal.event_time) : tr("noneYet");
+    $("latestWeight").textContent = wt ? `${wt.amount ?? "—"} ${formatUnit(wt.unit, wt.amount)}`.trim() : tr("noneYet");
 
     const today = startOfToday();
     const todays = state.events.filter(e => new Date(e.event_time) >= today);
@@ -381,9 +704,13 @@
     $("todayPoop").textContent = todays.filter(e=>e.event_type==="poop").length;
     $("todayMeal").textContent = todays.filter(e=>e.event_type==="meal").length;
     $("todayWater").textContent = todays.filter(e=>e.event_type==="water").length;
+    document.querySelectorAll(".mini-stat").forEach(card => {
+      const count = Number(card.querySelector("strong").textContent);
+      card.querySelector('[data-i18n="countUnit"]').textContent = tr(count === 1 ? "countOne" : "countUnit");
+    });
 
     if (state.household) $("settingsHousehold").textContent = state.household.name || "—";
-    if (state.member) $("settingsMe").textContent = state.member.display_name || "—";
+    if (state.member) $("settingsMe").textContent = state.demo ? tr("me") : (state.member.display_name || "—");
     if (state.household) $("settingsInvite").textContent = state.household.invite_code || "—";
 
     renderPetControls();
@@ -399,7 +726,7 @@
 
     const holder = $("timeline");
     if (!events.length) {
-      holder.innerHTML = `<div class="timeline-empty">${escapeHtml(state.pet?.name || "这只小狗")} 还没有记录。<br>点上面的按钮记下第一条吧。</div>`;
+      holder.innerHTML = `<div class="timeline-empty">${escapeHtml(tr("emptyTimeline", {pet: state.pet?.name || tr("thisDog")}))}<br>${escapeHtml(tr("firstRecordHint"))}</div>`;
       return;
     }
 
@@ -409,39 +736,39 @@
       const sep = dateLabel !== lastDate ? `<div class="date-sep">${escapeHtml(dateLabel)}</div>` : "";
       lastDate = dateLabel;
       const t = TYPE[e.event_type] || TYPE.note;
-      const who = state.members[e.user_id] || "家庭成员";
-      const amount = e.amount != null ? ` · ${escapeHtml(e.amount)} ${escapeHtml(e.unit || "")}` : "";
+      const who = recorderName(e);
+      const amount = e.amount != null ? ` · ${escapeHtml(e.amount)} ${escapeHtml(formatUnit(e.unit, e.amount))}` : "";
       return `${sep}
         <div class="event-row">
           <div class="event-icon">${t.icon}</div>
           <div class="event-main">
-            <b>${escapeHtml(t.label)}${amount}</b>
-            <div class="meta">${escapeHtml(who)} · ${escapeHtml(relativeAgo(e.event_time))}</div>
+            <b>${escapeHtml(tr(t.label))}${amount}</b>
+            <div class="meta"><span class="event-recorder">${escapeHtml(tr("recordedBy"))} <span class="recorder-name">${escapeHtml(who)}</span></span> · <span class="event-age">${escapeHtml(relativeAgo(e.event_time))}</span></div>
             ${e.note ? `<div class="event-note">${escapeHtml(e.note)}</div>` : ""}
           </div>
           <div class="event-time">
             ${escapeHtml(formatClock(e.event_time))}
-            <button data-delete="${escapeHtml(e.id)}">删除</button>
+            <button data-delete="${escapeHtml(e.id)}">${escapeHtml(tr("delete"))}</button>
           </div>
         </div>`;
     }).join("");
   }
 
-  function openLog(type, customPast = false) {
+  function openLog(type) {
     if (!state.pet) {
-      toast("请先添加一只小狗");
+      toast("addDogFirst");
       return;
     }
 
     const t = TYPE[type];
     $("eventType").value = type;
-    $("dialogTitle").textContent = `${t.icon} ${t.label}`;
-    $("dialogPetName").textContent = `记录给 ${state.pet.name}`;
+    $("dialogTitle").textContent = `${t.icon} ${tr(t.label)}`;
+    $("dialogPetName").textContent = tr("logFor", {pet: state.pet.name});
     $("eventTime").value = localDatetimeValue();
     $("eventAmount").value = "";
     $("eventNote").value = "";
     $("eventUnit").innerHTML = t.units.length
-      ? t.units.map(u => `<option value="${escapeHtml(u)}">${escapeHtml(u)}</option>`).join("")
+      ? t.units.map(u => `<option value="${escapeHtml(u)}">${escapeHtml(formatUnit(u))}</option>`).join("")
       : `<option value="">—</option>`;
     $("amountRow").classList.toggle("hidden", !t.units.length);
 
@@ -452,7 +779,7 @@
       $("eventAmount").required = false;
     }
 
-    $("dialogEyebrow").textContent = customPast ? "BACKFILL EVENT" : "ADD EVENT";
+    $("dialogEyebrow").textContent = tr("eyebrowAdd");
     $("logDialog").showModal();
   }
 
@@ -460,13 +787,15 @@
     formEvent.preventDefault();
     if (!state.pet) return;
 
+    const recorderId = state.demo ? "demo-user" : state.session?.user?.id;
+    if (!recorderId) { toast("signInRequired"); return; }
     const type = $("eventType").value;
     const rawAmount = $("eventAmount").value.trim();
     const item = {
       id: crypto.randomUUID(),
       household_id: state.household?.id || "demo",
       pet_id: state.pet.id,
-      user_id: state.member?.user_id || "demo-user",
+      user_id: recorderId,
       event_type: type,
       event_time: new Date($("eventTime").value).toISOString(),
       amount: rawAmount === "" ? null : Number(rawAmount),
@@ -481,7 +810,7 @@
       demoSaveEvents();
       renderAll();
       $("logDialog").close();
-      toast(`已保存到 ${state.pet.name}`);
+      toast("savedTo", {pet: state.pet.name});
       return;
     }
 
@@ -490,15 +819,15 @@
     delete cloudItem.created_at;
 
     const { error } = await state.supabase.from("puppy_events").insert(cloudItem);
-    if (error) { toast(error.message); return; }
+    if (error) { showError(error); return; }
 
     $("logDialog").close();
-    toast(`已同步到 ${state.pet.name}`);
+    toast("syncedTo", {pet: state.pet.name});
     await fetchEvents();
   }
 
   async function deleteEvent(id) {
-    if (!confirm("删除这条记录？")) return;
+    if (!confirm(tr("deleteConfirm"))) return;
 
     if (state.demo) {
       state.events = state.events.filter(e => e.id !== id);
@@ -508,7 +837,7 @@
     }
 
     const { error } = await state.supabase.from("puppy_events").delete().eq("id", id);
-    if (error) { toast(error.message); return; }
+    if (error) { showError(error); return; }
     await fetchEvents();
   }
 
@@ -537,7 +866,7 @@
       $("addPetDialog").close();
       $("settingsDialog").close();
       renderAll();
-      toast(`已添加 ${name}`);
+      toast("dogAdded", {pet: name});
       return;
     }
 
@@ -551,7 +880,7 @@
       .single();
 
     if (error) {
-      toast(error.message);
+      showError(error);
       return;
     }
 
@@ -559,7 +888,7 @@
     $("settingsDialog").close();
     await refreshPets(data.id);
     await fetchEvents();
-    toast(`已添加 ${name}`);
+    toast("dogAdded", {pet: name});
   }
 
   function bindPetClick(container) {
@@ -582,11 +911,6 @@
   function bindUI() {
     $("languageToggleBtn").addEventListener("click", toggleLanguage);
     $$(".quick-btn").forEach(btn => btn.addEventListener("click", () => openLog(btn.dataset.type)));
-
-    $("customTimeBtn").addEventListener("click", () => {
-      openLog("pee", true);
-      toast("可修改为过去的实际时间");
-    });
 
     $("closeDialogBtn").addEventListener("click", () => $("logDialog").close());
     $("cancelDialogBtn").addEventListener("click", () => $("logDialog").close());
@@ -616,7 +940,7 @@
     $$(".seg").forEach(btn => btn.addEventListener("click", () => {
       $$(".seg").forEach(b => b.classList.toggle("active", b===btn));
       const signup = btn.dataset.authMode === "signup";
-      $("authSubmitBtn").textContent = signup ? "注册" : "登录";
+      $("authSubmitBtn").textContent = tr(signup ? "signUp" : "signIn");
       $("authPassword").autocomplete = signup ? "new-password" : "current-password";
       $("authForm").dataset.mode = signup ? "signup" : "signin";
     }));
@@ -624,15 +948,16 @@
     $("forgotPasswordBtn").addEventListener("click", async () => {
       const email = $("authEmail").value.trim();
       if (!email) {
-        toast("请先输入你的邮箱");
+        toast("enterEmail");
         $("authEmail").focus();
         return;
       }
       const redirectTo = `${window.location.origin}${window.location.pathname}`;
       const { error } = await state.supabase.auth.resetPasswordForEmail(email, { redirectTo });
-      if (error) { toast(error.message); return; }
-      toast("重置邮件已发送，请检查邮箱");
-      $("authHint").textContent = "请打开邮件里的重置密码链接，然后回到这里设置新密码。";
+      if (error) { showError(error); return; }
+      toast("resetEmailSent");
+      state.authHint = "resetEmailHint";
+      renderAuthText();
     });
 
     $("recoveryForm").addEventListener("submit", async (e) => {
@@ -640,18 +965,18 @@
       const password = $("recoveryPassword").value;
       const confirmPassword = $("recoveryPasswordConfirm").value;
       if (password !== confirmPassword) {
-        toast("两次输入的密码不一致");
+        toast("passwordMismatch");
         return;
       }
       const { error } = await state.supabase.auth.updateUser({ password });
-      if (error) { toast(error.message); return; }
+      if (error) { showError(error); return; }
 
       state.recoveryMode = false;
       $("recoveryForm").reset();
       if (window.history?.replaceState) {
         window.history.replaceState({}, document.title, window.location.pathname);
       }
-      toast("密码已更新");
+      toast("passwordUpdated");
       await loadWorkspace();
     });
 
@@ -669,14 +994,14 @@
           options: { emailRedirectTo: `${window.location.origin}${window.location.pathname}` }
         });
         if (!result.error && !result.data.session) {
-          toast("注册成功，请先去邮箱点确认链接");
+          toast("signupConfirm");
           return;
         }
       } else {
         result = await state.supabase.auth.signInWithPassword({email, password});
       }
 
-      if (result.error) { toast(result.error.message); return; }
+      if (result.error) { showError(result.error); return; }
       state.session = result.data.session;
       await loadWorkspace();
     });
@@ -688,8 +1013,8 @@
         p_display_name: $("createDisplayName").value.trim(),
         p_pet_name: $("petNameInput").value.trim()
       });
-      if (error) { toast(error.message); return; }
-      toast(`创建成功，邀请码 ${data.invite_code}`);
+      if (error) { showError(error); return; }
+      toast("householdCreated", {code: data.invite_code});
       await loadWorkspace();
     });
 
@@ -699,8 +1024,8 @@
         p_invite_code: $("inviteCodeInput").value.trim().toUpperCase(),
         p_display_name: $("joinDisplayName").value.trim()
       });
-      if (error) { toast(error.message); return; }
-      toast("已加入共享日志");
+      if (error) { showError(error); return; }
+      toast("joinedJournal");
       await loadWorkspace();
     });
 
@@ -708,7 +1033,16 @@
       if (state.channel) state.supabase.removeChannel(state.channel);
       await state.supabase.auth.signOut();
       state.session = null;
+      state.household = null;
+      state.member = null;
+      state.members = {};
+      state.pets = [];
+      state.pet = null;
+      state.events = [];
+      state.authHint = "authMembers";
       $("settingsDialog").close();
+      renderAll();
+      renderAuthText();
       showView("auth");
       setCloudUI();
     });
@@ -716,7 +1050,7 @@
 
   async function start() {
     bindUI();
-    setCloudUI();
+    applyLanguage();
 
     if (state.demo) demoLoad();
     else await initCloud();
@@ -726,8 +1060,5 @@
     }, 60000);
   }
 
-  const languageObserver = new MutationObserver(() => requestAnimationFrame(applyLanguage));
-  languageObserver.observe(document.body, { childList: true, subtree: true, characterData: true });
-
-  start().finally(() => applyLanguage());
+  start().catch(showError);
 })();
