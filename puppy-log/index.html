@@ -53,7 +53,24 @@
         </label>
         <button id="authSubmitBtn" class="primary" type="submit">登录</button>
       </form>
+      <button id="forgotPasswordBtn" class="text-btn" type="button">忘记密码？</button>
       <p id="authHint" class="hint"></p>
+    </section>
+
+    <section id="recoveryView" class="panel auth-panel hidden">
+      <div class="panel-title"><div>
+        <div class="eyebrow">PASSWORD RECOVERY</div><h2>设置新密码</h2>
+      </div></div>
+      <form id="recoveryForm" class="form-stack">
+        <label>新密码
+          <input id="recoveryPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="至少 6 位" />
+        </label>
+        <label>再次输入新密码
+          <input id="recoveryPasswordConfirm" type="password" autocomplete="new-password" minlength="6" required placeholder="再次输入新密码" />
+        </label>
+        <button class="primary" type="submit">更新密码</button>
+      </form>
+      <p class="hint">设置成功后，你可以继续使用 Puppy Log。</p>
     </section>
 
     <section id="onboardingView" class="panel hidden">
@@ -244,6 +261,6 @@
   </dialog>
 
   <script src="./config.js"></script>
-  <script src="./app.js?v=3"></script>
+  <script src="./app.js?v=4"></script>
 </body>
 </html>

@@ -32,6 +32,7 @@
     filter: "all",
     limit: 100,
     channel: null,
+    recoveryMode: false,
     demo: !CLOUD_READY
   };
 
@@ -107,9 +108,11 @@
 
   function showView(name) {
     $("authView").classList.add("hidden");
+    $("recoveryView").classList.add("hidden");
     $("onboardingView").classList.add("hidden");
     $("appView").classList.add("hidden");
     if (name === "auth") $("authView").classList.remove("hidden");
+    if (name === "recovery") $("recoveryView").classList.remove("hidden");
     if (name === "onboarding") $("onboardingView").classList.remove("hidden");
     if (name === "app") $("appView").classList.remove("hidden");
   }
@@ -175,11 +178,19 @@
     const { data } = await state.supabase.auth.getSession();
     state.session = data.session;
 
-    state.supabase.auth.onAuthStateChange((_event, session) => {
+    state.supabase.auth.onAuthStateChange((event, session) => {
       state.session = session;
       setCloudUI();
+      if (event === "PASSWORD_RECOVERY") {
+        state.recoveryMode = true;
+        showView("recovery");
+      }
     });
 
+    if (state.recoveryMode) {
+      showView("recovery");
+      return;
+    }
     if (!state.session) {
       showView("auth");
       setCloudUI();
@@ -561,6 +572,40 @@
       $("authForm").dataset.mode = signup ? "signup" : "signin";
     }));
 
+    $("forgotPasswordBtn").addEventListener("click", async () => {
+      const email = $("authEmail").value.trim();
+      if (!email) {
+        toast("请先输入你的邮箱");
+        $("authEmail").focus();
+        return;
+      }
+      const redirectTo = `${window.location.origin}${window.location.pathname}`;
+      const { error } = await state.supabase.auth.resetPasswordForEmail(email, { redirectTo });
+      if (error) { toast(error.message); return; }
+      toast("重置邮件已发送，请检查邮箱");
+      $("authHint").textContent = "请打开邮件里的重置密码链接，然后回到这里设置新密码。";
+    });
+
+    $("recoveryForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const password = $("recoveryPassword").value;
+      const confirmPassword = $("recoveryPasswordConfirm").value;
+      if (password !== confirmPassword) {
+        toast("两次输入的密码不一致");
+        return;
+      }
+      const { error } = await state.supabase.auth.updateUser({ password });
+      if (error) { toast(error.message); return; }
+
+      state.recoveryMode = false;
+      $("recoveryForm").reset();
+      if (window.history?.replaceState) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+      toast("密码已更新");
+      await loadWorkspace();
+    });
+
     $("authForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const email = $("authEmail").value.trim();
@@ -569,7 +614,11 @@
       let result;
 
       if (mode === "signup") {
-        result = await state.supabase.auth.signUp({email, password});
+        result = await state.supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: `${window.location.origin}${window.location.pathname}` }
+        });
         if (!result.error && !result.data.session) {
           toast("注册成功，请先去邮箱点确认链接");
           return;
