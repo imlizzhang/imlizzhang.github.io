@@ -9,8 +9,8 @@
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="Puppy Log" name="apple-mobile-web-app-title"/>
 <title>Puppy Log · 小狗成长日志</title>
-<link href="./manifest.webmanifest?v=6" rel="manifest"/>
-<link href="./styles.css?v=6" rel="stylesheet"/>
+<link href="./manifest.webmanifest?v=7" rel="manifest"/>
+<link href="./styles.css?v=7" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -78,7 +78,7 @@
 </div>
 </div>
 <div class="onboarding-grid">
-<form class="mini-card form-stack hidden" id="createHouseholdForm">
+<form class="mini-card form-stack" id="createHouseholdForm">
 <h3 data-i18n="firstSetup">第一次设置</h3>
 <label><span data-i18n="displayName">你的显示名字</span>
             <input data-i18n-placeholder="displayNameExample" id="createDisplayName" placeholder="例如 Li / Mom" required=""/>
@@ -105,22 +105,22 @@
 </section>
 <section id="appView">
 <section aria-label="最近状态" class="status-grid" data-i18n-aria-label="recentStatus">
-<article class="status-card">
+<button aria-haspopup="dialog" aria-label="查看所有小便记录" class="status-card status-card-button" data-history-type="pee" data-i18n-aria-label="viewPeeHistory" type="button">
 <span class="status-icon">💧</span>
 <div><small data-i18n="lastPee">上次小便</small><strong id="lastPee">—</strong></div>
-</article>
-<article class="status-card">
+</button>
+<button aria-haspopup="dialog" aria-label="查看所有大便记录" class="status-card status-card-button" data-history-type="poop" data-i18n-aria-label="viewPoopHistory" type="button">
 <span class="status-icon">💩</span>
 <div><small data-i18n="lastPoop">上次大便</small><strong id="lastPoop">—</strong></div>
-</article>
-<article class="status-card">
+</button>
+<button aria-haspopup="dialog" aria-label="查看所有吃饭记录" class="status-card status-card-button" data-history-type="meal" data-i18n-aria-label="viewMealHistory" type="button">
 <span class="status-icon">🍽️</span>
 <div><small data-i18n="lastMeal">上次吃饭</small><strong id="lastMeal">—</strong></div>
-</article>
-<article class="status-card">
+</button>
+<button aria-haspopup="dialog" aria-label="查看体重变化图" class="status-card status-card-button" data-history-type="weight" data-i18n-aria-label="viewWeightHistory" type="button">
 <span class="status-icon">⚖️</span>
 <div><small data-i18n="latestWeight">最新体重</small><strong id="latestWeight">—</strong></div>
-</article>
+</button>
 </section>
 <section class="panel quick-panel">
 <div class="panel-title">
@@ -194,6 +194,24 @@
 </div>
 </form>
 </dialog>
+<dialog id="historyDialog">
+<div class="dialog-card history-dialog-card">
+<div class="dialog-head">
+<div>
+<div class="eyebrow" data-i18n="eyebrowHistory">全部记录</div>
+<h2 id="historyTitle">记录</h2>
+<div class="dialog-pet-name" id="historySubtitle"></div>
+</div>
+<button aria-label="关闭" class="icon-btn" data-i18n-aria-label="close" id="closeHistoryBtn" type="button">×</button>
+</div>
+<div class="history-body">
+<div class="history-loading" data-i18n="loadingRecords" id="historyLoading">正在加载记录…</div>
+<div class="timeline-empty hidden" id="historyEmpty"></div>
+<div aria-label="体重变化折线图" class="history-chart hidden" id="historyChart" role="img"></div>
+<div class="history-list" id="historyList"></div>
+</div>
+</div>
+</dialog>
 <dialog id="settingsDialog">
 <div class="dialog-card">
 <div class="dialog-head">
@@ -241,7 +259,7 @@
 </form>
 </dialog>
 <script src="./config.js"></script>
-<script src="./app.js?v=6"></script>
+<script src="./app.js?v=7"></script>
 </body>
 </html>
 

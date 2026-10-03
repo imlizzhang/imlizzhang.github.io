@@ -140,7 +140,24 @@
     "eyebrowHandoff": "照护交接",
     "eyebrowAdd": "添加记录",
     "eyebrowSettings": "设置",
-    "eyebrowAddDog": "添加小狗"
+    "eyebrowAddDog": "添加小狗",
+    "eyebrowHistory": "全部记录",
+    "viewPeeHistory": "查看所有小便记录",
+    "viewPoopHistory": "查看所有大便记录",
+    "viewMealHistory": "查看所有吃饭记录",
+    "viewWeightHistory": "查看体重变化图",
+    "peeHistoryTitle": "所有小便记录",
+    "poopHistoryTitle": "所有大便记录",
+    "mealHistoryTitle": "所有吃饭记录",
+    "weightHistoryTitle": "体重变化",
+    "historyCount": "{pet} · 共 {count} 条记录",
+    "historyCountOne": "{pet} · 共 1 条记录",
+    "loadingRecords": "正在加载记录…",
+    "noTypeHistory": "{pet} 还没有{type}记录。",
+    "noWeightHistory": "{pet} 还没有可绘制的体重记录。",
+    "weightChartAria": "{pet} 的体重变化折线图，单位为 {unit}",
+    "weightPoint": "{date}：{value} {unit}",
+    "historyLoadFailed": "记录加载失败，请重试。"
   },
   "en": {
     "demoMode": "Demo mode",
@@ -269,7 +286,24 @@
     "eyebrowHandoff": "HANDOFF",
     "eyebrowAdd": "ADD EVENT",
     "eyebrowSettings": "SETTINGS",
-    "eyebrowAddDog": "ADD PET"
+    "eyebrowAddDog": "ADD PET",
+    "eyebrowHistory": "ALL RECORDS",
+    "viewPeeHistory": "View all pee records",
+    "viewPoopHistory": "View all poop records",
+    "viewMealHistory": "View all meal records",
+    "viewWeightHistory": "View weight chart",
+    "peeHistoryTitle": "All pee records",
+    "poopHistoryTitle": "All poop records",
+    "mealHistoryTitle": "All meal records",
+    "weightHistoryTitle": "Weight history",
+    "historyCount": "{pet} · {count} records",
+    "historyCountOne": "{pet} · 1 record",
+    "loadingRecords": "Loading records…",
+    "noTypeHistory": "No {type} records for {pet} yet.",
+    "noWeightHistory": "No weight records are available to chart for {pet} yet.",
+    "weightChartAria": "Line chart of {pet}’s weight in {unit}",
+    "weightPoint": "{date}: {value} {unit}",
+    "historyLoadFailed": "Records could not be loaded. Please try again."
   }
 };
   let activeToast = null;
@@ -333,6 +367,7 @@
     renderAuthText();
     renderAll();
     renderLogText();
+    if ($("historyDialog")?.open) renderHistoryDialog();
     if (activeToast) $("toast").textContent = tr(activeToast.key, activeToast.values);
   }
 
@@ -367,6 +402,11 @@
     channel: null,
     recoveryMode: false,
     authHint: "authMembers",
+    historyType: null,
+    historyEvents: [],
+    historyLoading: false,
+    historyError: false,
+    historyRequestId: 0,
     demo: !CLOUD_READY
   };
 
@@ -456,6 +496,243 @@
     return tr("unknownRecorder");
   }
 
+  function historyTitleKey(type) {
+    return ({
+      pee: "peeHistoryTitle",
+      poop: "poopHistoryTitle",
+      meal: "mealHistoryTitle",
+      weight: "weightHistoryTitle"
+    })[type] || "recentActivity";
+  }
+
+  function formatHistoryDateTime(iso) {
+    return new Intl.DateTimeFormat(currentLanguage === "zh" ? "zh-CN" : "en-US", {
+      year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "2-digit"
+    }).format(new Date(iso));
+  }
+
+  function formatShortDate(iso) {
+    return new Intl.DateTimeFormat(currentLanguage === "zh" ? "zh-CN" : "en-US", {
+      month: "short", day: "numeric"
+    }).format(new Date(iso));
+  }
+
+  async function fetchHistoryEvents(type) {
+    if (!state.pet) return [];
+
+    if (state.demo) {
+      const all = JSON.parse(localStorage.getItem("puppy-log-demo-events") || "[]");
+      return all.filter(e => e.pet_id === state.pet.id && e.event_type === type)
+        .sort((a, b) => new Date(b.event_time) - new Date(a.event_time));
+    }
+
+    const rows = [];
+    const pageSize = 500;
+    let from = 0;
+
+    while (true) {
+      const {data, error} = await state.supabase
+        .from("puppy_events")
+        .select("*")
+        .eq("household_id", state.household.id)
+        .eq("pet_id", state.pet.id)
+        .eq("event_type", type)
+        .order("event_time", {ascending: false})
+        .range(from, from + pageSize - 1);
+
+      if (error) throw error;
+      rows.push(...(data || []));
+      if (!data || data.length < pageSize) break;
+      from += pageSize;
+    }
+
+    return rows;
+  }
+
+  async function openHistory(type) {
+    if (!state.pet || !TYPE[type]) return;
+
+    const requestId = ++state.historyRequestId;
+    state.historyType = type;
+    state.historyEvents = [];
+    state.historyLoading = true;
+    state.historyError = false;
+    renderHistoryDialog();
+    if (!$("historyDialog").open) $("historyDialog").showModal();
+
+    try {
+      const rows = await fetchHistoryEvents(type);
+      if (requestId !== state.historyRequestId) return;
+      state.historyEvents = rows;
+      state.historyLoading = false;
+      state.historyError = false;
+      renderHistoryDialog();
+    } catch (error) {
+      if (requestId !== state.historyRequestId) return;
+      console.error("Puppy Log history load failed:", error);
+      state.historyEvents = [];
+      state.historyLoading = false;
+      state.historyError = true;
+      renderHistoryDialog();
+      toast("historyLoadFailed");
+    }
+  }
+
+  function renderHistoryDialog() {
+    const type = state.historyType;
+    if (!type || !TYPE[type]) return;
+
+    const events = state.historyEvents || [];
+    const petName = state.pet?.name || tr("thisDog");
+    $("historyTitle").textContent = tr(historyTitleKey(type));
+    $("historySubtitle").textContent = tr(events.length === 1 ? "historyCountOne" : "historyCount", {pet: petName, count: events.length});
+    $("historyLoading").classList.toggle("hidden", !state.historyLoading);
+    $("historyEmpty").classList.add("hidden");
+    $("historyChart").classList.add("hidden");
+    $("historyChart").innerHTML = "";
+    $("historyList").innerHTML = "";
+
+    if (state.historyLoading) return;
+
+    if (state.historyError) {
+      $("historyEmpty").textContent = tr("historyLoadFailed");
+      $("historyEmpty").classList.remove("hidden");
+      return;
+    }
+
+    if (type === "weight") {
+      renderWeightChart(events, petName);
+      return;
+    }
+
+    if (!events.length) {
+      $("historyEmpty").textContent = tr("noTypeHistory", {
+        pet: petName,
+        type: tr(TYPE[type].label)
+      });
+      $("historyEmpty").classList.remove("hidden");
+      return;
+    }
+
+    let lastDate = "";
+    $("historyList").innerHTML = events.map(event => {
+      const dateLabel = formatDate(event.event_time);
+      const separator = dateLabel !== lastDate
+        ? `<div class="date-sep">${escapeHtml(dateLabel)}</div>` : "";
+      lastDate = dateLabel;
+      const who = recorderName(event);
+      const amount = event.amount != null
+        ? ` · ${escapeHtml(event.amount)} ${escapeHtml(formatUnit(event.unit, event.amount))}` : "";
+      const info = TYPE[event.event_type] || TYPE.note;
+      return `${separator}
+        <div class="event-row history-event-row">
+          <div class="event-icon">${info.icon}</div>
+          <div class="event-main">
+            <b>${escapeHtml(tr(info.label))}${amount}</b>
+            <div class="meta"><span class="event-recorder">${escapeHtml(tr("recordedBy"))} <span class="recorder-name">${escapeHtml(who)}</span></span></div>
+            ${event.note ? `<div class="event-note">${escapeHtml(event.note)}</div>` : ""}
+          </div>
+          <div class="event-time">${escapeHtml(formatHistoryDateTime(event.event_time))}</div>
+        </div>`;
+    }).join("");
+  }
+
+  function normalizedWeight(amount, fromUnit, toUnit) {
+    const value = Number(amount);
+    if (!Number.isFinite(value)) return null;
+    const from = String(fromUnit || toUnit).toLowerCase();
+    const to = String(toUnit || fromUnit).toLowerCase();
+    if (!from || !to || from === to) return value;
+    if (from === "kg" && to === "lb") return value * 2.2046226218;
+    if (from === "lb" && to === "kg") return value / 2.2046226218;
+    return null;
+  }
+
+  function renderWeightChart(events, petName) {
+    const valid = events
+      .filter(event => Number.isFinite(Number(event.amount)))
+      .sort((a, b) => new Date(a.event_time) - new Date(b.event_time));
+
+    if (!valid.length) {
+      $("historyEmpty").textContent = tr("noWeightHistory", {pet: petName});
+      $("historyEmpty").classList.remove("hidden");
+      return;
+    }
+
+    const lastKnownUnit = [...valid].reverse().find(event => ["lb", "kg"].includes(String(event.unit).toLowerCase()))?.unit;
+    const unit = String(lastKnownUnit || valid[valid.length - 1].unit || "lb").toLowerCase();
+    const points = valid.map(event => ({
+      event,
+      value: normalizedWeight(event.amount, event.unit, unit)
+    })).filter(point => Number.isFinite(point.value));
+
+    if (!points.length) {
+      $("historyEmpty").textContent = tr("noWeightHistory", {pet: petName});
+      $("historyEmpty").classList.remove("hidden");
+      return;
+    }
+
+    const compact = window.matchMedia("(max-width: 520px)").matches;
+    const width = compact ? 360 : 680;
+    const height = compact ? 275 : 330;
+    const margin = compact
+      ? {left: 43, right: 12, top: 24, bottom: 45}
+      : {left: 58, right: 24, top: 28, bottom: 54};
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+    const values = points.map(point => point.value);
+    let minValue = Math.min(...values), maxValue = Math.max(...values);
+    const naturalRange = maxValue - minValue;
+    const pad = naturalRange > 0 ? naturalRange * 0.12 : Math.max(Math.abs(maxValue) * 0.05, 0.5);
+    minValue -= pad;
+    maxValue += pad;
+
+    const xAt = index => points.length === 1
+      ? margin.left + innerWidth / 2
+      : margin.left + index * innerWidth / (points.length - 1);
+    const yAt = value => margin.top + (maxValue - value) * innerHeight / (maxValue - minValue);
+    const polyline = points.map((point, index) => `${xAt(index).toFixed(2)},${yAt(point.value).toFixed(2)}`).join(" ");
+
+    const yTickCount = 4;
+    const yTicks = Array.from({length: yTickCount + 1}, (_, index) => {
+      const value = minValue + (maxValue - minValue) * index / yTickCount;
+      const y = yAt(value);
+      return `<line class="chart-grid-line" x1="${margin.left}" x2="${width - margin.right}" y1="${y}" y2="${y}"/>
+        <text class="chart-axis-label" x="${margin.left - 9}" y="${y + 4}" text-anchor="end">${escapeHtml(value.toFixed(1))}</text>`;
+    }).join("");
+
+    const tickIndexes = [...new Set([0, Math.floor((points.length - 1) / 3), Math.floor(2 * (points.length - 1) / 3), points.length - 1])];
+    const xTicks = tickIndexes.map(index => {
+      const x = xAt(index);
+      return `<text class="chart-axis-label" x="${x}" y="${height - 18}" text-anchor="middle">${escapeHtml(formatShortDate(points[index].event.event_time))}</text>`;
+    }).join("");
+
+    const circles = points.map((point, index) => {
+      const valueText = point.value.toFixed(point.value % 1 === 0 ? 0 : 1);
+      const title = tr("weightPoint", {
+        date: formatHistoryDateTime(point.event.event_time),
+        value: valueText,
+        unit
+      });
+      const label = points.length <= 10
+        ? `<text class="chart-value-label" x="${xAt(index)}" y="${yAt(point.value) - 10}" text-anchor="middle">${escapeHtml(valueText)}</text>` : "";
+      return `${label}<circle class="chart-point" cx="${xAt(index)}" cy="${yAt(point.value)}" r="5" tabindex="0"><title>${escapeHtml(title)}</title></circle>`;
+    }).join("");
+
+    const aria = tr("weightChartAria", {pet: petName, unit});
+    $("historyChart").setAttribute("aria-label", aria);
+    $("historyChart").innerHTML = `<svg aria-hidden="true" class="weight-chart-svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 ${width} ${height}">
+      ${yTicks}
+      <line class="chart-axis-line" x1="${margin.left}" x2="${margin.left}" y1="${margin.top}" y2="${height - margin.bottom}"/>
+      <line class="chart-axis-line" x1="${margin.left}" x2="${width - margin.right}" y1="${height - margin.bottom}" y2="${height - margin.bottom}"/>
+      <polyline class="chart-line" fill="none" points="${polyline}"/>
+      ${circles}
+      ${xTicks}
+      <text class="chart-unit-label" x="${margin.left}" y="17">${escapeHtml(unit)}</text>
+    </svg>`;
+    $("historyChart").classList.remove("hidden");
+  }
+
   function petStorageKey() {
     return state.household ? `puppy-log-selected-pet-${state.household.id}` : "puppy-log-selected-pet";
   }
@@ -495,6 +772,8 @@
     const next = state.pets.find(p => p.id === petId);
     if (!next || next.id === state.pet?.id) return;
     state.pet = next;
+    state.historyRequestId += 1;
+    if ($("historyDialog")?.open) $("historyDialog").close();
     localStorage.setItem(petStorageKey(), next.id);
     state.events = [];
     renderAll();
@@ -911,8 +1190,13 @@
   function bindUI() {
     $("languageToggleBtn").addEventListener("click", toggleLanguage);
     $$(".quick-btn").forEach(btn => btn.addEventListener("click", () => openLog(btn.dataset.type)));
+    $$("[data-history-type]").forEach(btn => btn.addEventListener("click", () => openHistory(btn.dataset.historyType)));
 
     $("closeDialogBtn").addEventListener("click", () => $("logDialog").close());
+    $("closeHistoryBtn").addEventListener("click", () => {
+      state.historyRequestId += 1;
+      $("historyDialog").close();
+    });
     $("cancelDialogBtn").addEventListener("click", () => $("logDialog").close());
     $("logForm").addEventListener("submit", saveEvent);
 
@@ -1039,6 +1323,11 @@
       state.pets = [];
       state.pet = null;
       state.events = [];
+      state.historyRequestId += 1;
+      state.historyType = null;
+      state.historyEvents = [];
+      state.historyError = false;
+      if ($("historyDialog")?.open) $("historyDialog").close();
       state.authHint = "authMembers";
       $("settingsDialog").close();
       renderAll();

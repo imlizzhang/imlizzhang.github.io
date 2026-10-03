@@ -115,3 +115,40 @@ dialog::backdrop{background:rgba(30,28,24,.36);backdrop-filter:blur(2px)}
 .event-main{min-width:0}
 .event-main .meta,.event-note{overflow-wrap:anywhere}
 .recorder-name{font-weight:650;color:var(--ink)}
+
+/* Clickable status cards open complete histories. */
+.status-card-button{
+  width:100%;color:inherit;text-align:left;appearance:none;position:relative;
+  padding-right:34px;transition:background .15s,transform .15s,border-color .15s;
+}
+.status-card-button::after{
+  content:"›";position:absolute;right:13px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:22px;font-weight:500;
+}
+.status-card-button:hover,.status-card-button:active{background:var(--soft);transform:translateY(-1px)}
+.status-card-button:focus-visible{outline:3px solid rgba(60,55,48,.18);outline-offset:2px}
+
+#historyDialog{width:min(760px,100%)}
+.history-dialog-card{max-height:min(86vh,760px);overflow:hidden}
+.history-body{min-height:150px;overflow-y:auto;padding-right:2px}
+.history-loading{padding:36px 8px;text-align:center;color:var(--muted);font-size:13px}
+.history-list{display:flex;flex-direction:column;gap:2px}
+.history-event-row .event-time{max-width:145px;white-space:normal;line-height:1.4}
+.history-chart{border:1px solid var(--line);border-radius:18px;background:#fff;padding:10px;overflow:hidden}
+.weight-chart-svg{display:block;width:100%;height:auto}
+.chart-grid-line{stroke:var(--line);stroke-width:1}
+.chart-axis-line{stroke:#a9a49a;stroke-width:1.2}
+.chart-line{stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.chart-point{fill:var(--card);stroke:var(--accent);stroke-width:3;outline:none}
+.chart-point:focus{stroke-width:5}
+.chart-axis-label{fill:var(--muted);font-size:12px}
+.chart-value-label{fill:var(--ink);font-size:11px;font-weight:700}
+.chart-unit-label{fill:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase}
+
+@media(max-width:520px){
+  #historyDialog{padding:8px}
+  .history-dialog-card{max-height:90vh;padding:15px}
+  .history-event-row{grid-template-columns:42px 1fr;gap:9px}
+  .history-event-row .event-time{grid-column:2;text-align:left;max-width:none;margin-top:-4px}
+}
+
