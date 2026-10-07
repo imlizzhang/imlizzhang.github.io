@@ -44,7 +44,9 @@ button{cursor:pointer}
 .event-main b{font-size:14px}.event-main .meta{margin-top:4px;color:var(--muted);font-size:12px;line-height:1.45}
 .event-note{margin-top:5px;font-size:13px;line-height:1.45}
 .event-time{font-size:12px;color:var(--muted);white-space:nowrap;text-align:right}
-.event-time button{display:block;margin:5px 0 0 auto;border:0;background:transparent;color:#aaa;font-size:11px;padding:2px}
+.event-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
+.event-actions button{border:0;background:transparent;color:#8a877f;font-size:11px;padding:2px;text-decoration:underline;text-underline-offset:3px}
+.event-actions button:hover,.event-actions button:focus-visible{color:var(--ink)}
 .date-sep{padding:16px 4px 6px;color:var(--muted);font-size:12px;font-weight:700}
 .filter-wrap{display:flex;background:var(--soft);padding:3px;border-radius:12px}
 .filter-btn{border:0;background:transparent;color:var(--muted);padding:6px 9px;border-radius:9px;font-size:12px}
@@ -152,3 +154,55 @@ dialog::backdrop{background:rgba(30,28,24,.36);backdrop-filter:blur(2px)}
   .history-event-row .event-time{grid-column:2;text-align:left;max-width:none;margin-top:-4px}
 }
 
+
+
+/* Per-dog outing reminder. Settings are stored locally on each device. */
+.outing-reminder{
+  margin:12px 0 14px;border:1px solid var(--line);border-radius:18px;background:var(--card);
+  padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:var(--shadow);
+}
+.outing-reminder-main{display:flex;align-items:flex-start;gap:11px;min-width:0}
+.outing-reminder-icon{font-size:22px;line-height:1.25}
+.outing-reminder-copy{min-width:0}
+.outing-reminder-copy small{display:block;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.outing-reminder-copy strong{display:block;font-size:14px;line-height:1.4}
+.outing-reminder-copy>span{display:block;color:var(--muted);font-size:12px;line-height:1.45;margin-top:3px}
+.outing-reminder-actions{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.outing-reminder.reminder-soon{background:#fff9df;border-color:#e9d98a}
+.outing-reminder.reminder-overdue{background:#fff0ed;border-color:#e4aaa2}
+.outing-reminder.reminder-overdue .outing-reminder-copy strong{color:var(--danger)}
+
+.reminder-settings{border-top:1px solid var(--line);margin-top:4px;padding-top:14px;display:flex;flex-direction:column;gap:11px}
+.reminder-settings-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.reminder-settings-head small{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
+.reminder-settings-head strong{font-size:14px}
+.reminder-settings .full{margin-top:0}
+
+.history-chart+.history-list{margin-top:12px;border-top:1px solid var(--line);padding-top:4px}
+
+@media(max-width:600px){
+  .outing-reminder{align-items:stretch;flex-direction:column}
+  .outing-reminder-actions{justify-content:space-between}
+}
+
+@media(max-width:520px){
+  .event-actions{justify-content:flex-start}
+  .event-time .event-actions{justify-content:flex-end}
+  .history-event-row .event-time .event-actions{justify-content:flex-start}
+}
+
+/* v9: calendar-week archive controls for the main timeline. */
+.timeline-archive-controls{
+  border-top:1px solid var(--line);margin-top:10px;padding-top:12px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.timeline-scope{color:var(--muted);font-size:12px;font-weight:700}
+.timeline-load-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.timeline-load-actions .text-btn{padding:8px 2px}
+.timeline-load-actions button:disabled{cursor:wait;opacity:.6}
+.chart-time-grid-line{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4;opacity:.75}
+
+@media(max-width:520px){
+  .timeline-archive-controls{align-items:flex-start;flex-direction:column}
+  .timeline-load-actions{width:100%;justify-content:space-between}
+}

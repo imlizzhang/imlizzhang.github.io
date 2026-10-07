@@ -68,6 +68,16 @@
     "today": "今天",
     "yesterday": "昨天",
     "loadEarlier": "加载更早记录",
+    "loadPreviousWeek": "加载上一周",
+    "loadAllRecords": "加载全部",
+    "loadingEarlier": "正在加载…",
+    "timelineThisWeek": "本周记录",
+    "timelineWeeks": "最近 {count} 周",
+    "timelineAll": "全部记录",
+    "noRecordsThisWeek": "{pet} 本周还没有记录。",
+    "noRecordsToday": "{pet} 今天还没有记录。",
+    "noRecordsLoadedPeriod": "{pet} 在已加载的时间范围内没有记录。",
+    "olderRecordsHint": "更早记录已归档，可按需加载。",
     "log": "记录",
     "time": "时间",
     "amount": "数量",
@@ -157,7 +167,37 @@
     "noWeightHistory": "{pet} 还没有可绘制的体重记录。",
     "weightChartAria": "{pet} 的体重变化折线图，单位为 {unit}",
     "weightPoint": "{date}：{value} {unit}",
-    "historyLoadFailed": "记录加载失败，请重试。"
+    "historyLoadFailed": "记录加载失败，请重试。",
+    "edit": "修改",
+    "recordType": "记录类型",
+    "eyebrowEdit": "修改记录",
+    "saveChanges": "保存修改",
+    "recordUpdated": "记录已更新",
+    "recordNotFound": "找不到这条记录，请刷新后重试。",
+    "outingReminder": "出门提醒",
+    "logPeeNow": "记录小便",
+    "reminderSettings": "提醒设置",
+    "reminderSchedule": "提醒间隔",
+    "reminderPuppyPreset": "幼犬 · 每 4 小时",
+    "reminderAdultPreset": "大狗 · 每 6.5 小时",
+    "reminderCustomPreset": "自定义",
+    "reminderOffPreset": "关闭提醒",
+    "customHours": "自定义小时数",
+    "saveReminder": "保存提醒设置",
+    "reminderLocalHint": "按最近一次小便记录计算。设置只保存在当前设备，每台手机可以单独选择。",
+    "reminderSaved": "{pet} 的提醒已保存",
+    "reminderDisabled": "{pet} 的出门提醒已关闭",
+    "reminderNoPee": "{pet} 还没有小便记录；记录一次后开始倒计时。",
+    "reminderWaitingDetail": "当前设置：每 {hours} 小时提醒",
+    "reminderNext": "{pet} 距离下次出门还有 {remaining}",
+    "reminderDueSoon": "{pet} 很快需要出门：还有 {remaining}",
+    "reminderOverdue": "{pet} 该出门了，已超时 {overdue}",
+    "reminderBasedOn": "按最后一次小便 {time} 计算 · 每 {hours} 小时",
+    "reminderOffStatus": "当前已关闭出门提醒",
+    "durationMinutes": "{minutes} 分钟",
+    "durationHours": "{hours} 小时",
+    "durationHoursMinutes": "{hours} 小时 {minutes} 分钟",
+    "invalidReminderHours": "请输入 0.5 到 24 之间的小时数"
   },
   "en": {
     "demoMode": "Demo mode",
@@ -214,6 +254,16 @@
     "today": "Today",
     "yesterday": "Yesterday",
     "loadEarlier": "Load earlier records",
+    "loadPreviousWeek": "Load previous week",
+    "loadAllRecords": "Load all",
+    "loadingEarlier": "Loading…",
+    "timelineThisWeek": "This week",
+    "timelineWeeks": "Last {count} weeks",
+    "timelineAll": "All records",
+    "noRecordsThisWeek": "No records for {pet} this week.",
+    "noRecordsToday": "No records for {pet} today.",
+    "noRecordsLoadedPeriod": "No records for {pet} in the loaded date range.",
+    "olderRecordsHint": "Earlier records are archived and can be loaded when needed.",
     "log": "Log",
     "time": "Time",
     "amount": "Amount",
@@ -303,7 +353,37 @@
     "noWeightHistory": "No weight records are available to chart for {pet} yet.",
     "weightChartAria": "Line chart of {pet}’s weight in {unit}",
     "weightPoint": "{date}: {value} {unit}",
-    "historyLoadFailed": "Records could not be loaded. Please try again."
+    "historyLoadFailed": "Records could not be loaded. Please try again.",
+    "edit": "Edit",
+    "recordType": "Record type",
+    "eyebrowEdit": "EDIT RECORD",
+    "saveChanges": "Save changes",
+    "recordUpdated": "Record updated",
+    "recordNotFound": "This record could not be found. Refresh and try again.",
+    "outingReminder": "Outing reminder",
+    "logPeeNow": "Log pee",
+    "reminderSettings": "Reminder settings",
+    "reminderSchedule": "Reminder interval",
+    "reminderPuppyPreset": "Puppy · Every 4 hours",
+    "reminderAdultPreset": "Adult dog · Every 6.5 hours",
+    "reminderCustomPreset": "Custom",
+    "reminderOffPreset": "Turn reminders off",
+    "customHours": "Custom hours",
+    "saveReminder": "Save reminder settings",
+    "reminderLocalHint": "The timer starts from the latest pee record. Settings are saved on this device, so each phone can choose separately.",
+    "reminderSaved": "Reminder saved for {pet}",
+    "reminderDisabled": "Outing reminder turned off for {pet}",
+    "reminderNoPee": "No pee record for {pet} yet. Log one to start the timer.",
+    "reminderWaitingDetail": "Current setting: every {hours} hours",
+    "reminderNext": "Next outing for {pet} in {remaining}",
+    "reminderDueSoon": "{pet} should go out soon: {remaining} remaining",
+    "reminderOverdue": "{pet} should go out now — overdue by {overdue}",
+    "reminderBasedOn": "Based on the last pee at {time} · every {hours} hours",
+    "reminderOffStatus": "Outing reminders are turned off",
+    "durationMinutes": "{minutes} min",
+    "durationHours": "{hours} hr",
+    "durationHoursMinutes": "{hours} hr {minutes} min",
+    "invalidReminderHours": "Enter a number from 0.5 to 24 hours"
   }
 };
   let activeToast = null;
@@ -340,6 +420,10 @@
   function renderLogText() {
     const type = $("eventType").value;
     const info = TYPE[type];
+    const editing = Boolean(state.editingEventId);
+    $("dialogEyebrow").textContent = tr(editing ? "eyebrowEdit" : "eyebrowAdd");
+    $("saveEventBtn").textContent = tr(editing ? "saveChanges" : "saveRecord");
+    $("eventTypeRow").classList.toggle("hidden", !editing);
     if (!info) {
       $("dialogTitle").textContent = tr("log");
       return;
@@ -397,8 +481,13 @@
     pet: null,
     members: {},
     events: [],
+    latestByType: {},
     filter: "all",
-    limit: 100,
+    loadedWeeks: 1,
+    allEventsLoaded: false,
+    hasOlderEvents: false,
+    eventsLoading: false,
+    weekAnchor: null,
     channel: null,
     recoveryMode: false,
     authHint: "authMembers",
@@ -407,6 +496,8 @@
     historyLoading: false,
     historyError: false,
     historyRequestId: 0,
+    editingEventId: null,
+    returnHistoryType: null,
     demo: !CLOUD_READY
   };
 
@@ -442,6 +533,86 @@
 
   function startOfToday() {
     const d = new Date(); d.setHours(0,0,0,0); return d;
+  }
+
+  function startOfWeek(date = new Date()) {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    const day = d.getDay();
+    const daysSinceMonday = (day + 6) % 7;
+    d.setDate(d.getDate() - daysSinceMonday);
+    return d;
+  }
+
+  function currentWeekAnchor() {
+    return startOfWeek().toISOString();
+  }
+
+  function loadedWindowStart() {
+    const start = new Date(state.weekAnchor || currentWeekAnchor());
+    start.setDate(start.getDate() - 7 * Math.max(0, state.loadedWeeks - 1));
+    return start;
+  }
+
+  function resetEventWindow() {
+    state.events = [];
+    state.latestByType = {};
+    state.loadedWeeks = 1;
+    state.allEventsLoaded = false;
+    state.hasOlderEvents = false;
+    state.eventsLoading = false;
+    state.weekAnchor = currentWeekAnchor();
+  }
+
+  const EVENT_CACHE_MAX_AGE = 48 * 60 * 60 * 1000;
+
+  function eventCacheKey(petId, householdId, weekAnchor = state.weekAnchor) {
+    return `puppy-log-week-cache-v9-${householdId}-${petId}-${weekAnchor || currentWeekAnchor()}`;
+  }
+
+  function hydrateEventCache(petId, householdId, startIso) {
+    try {
+      const raw = localStorage.getItem(eventCacheKey(petId, householdId));
+      if (!raw) return false;
+      const cached = JSON.parse(raw);
+      if (!cached || Date.now() - Number(cached.savedAt) > EVENT_CACHE_MAX_AGE) return false;
+      const start = new Date(startIso);
+      state.events = (Array.isArray(cached.events) ? cached.events : [])
+        .filter(event => new Date(event.event_time) >= start)
+        .sort((a, b) => new Date(b.event_time) - new Date(a.event_time));
+      state.latestByType = cached.latestByType && typeof cached.latestByType === "object"
+        ? cached.latestByType : {};
+      state.hasOlderEvents = Boolean(cached.hasOlderEvents);
+      return true;
+    } catch (error) {
+      console.warn("Invalid Puppy Log event cache:", error);
+      return false;
+    }
+  }
+
+  function saveEventCache(petId, householdId) {
+    try {
+      const weekStart = new Date(state.weekAnchor || currentWeekAnchor());
+      const weekEvents = state.events.filter(event => new Date(event.event_time) >= weekStart);
+      const hasOlderEvents = state.allEventsLoaded
+        ? state.events.some(event => new Date(event.event_time) < weekStart)
+        : state.hasOlderEvents || state.loadedWeeks > 1;
+      localStorage.setItem(eventCacheKey(petId, householdId), JSON.stringify({
+        savedAt: Date.now(),
+        events: weekEvents,
+        latestByType: state.latestByType,
+        hasOlderEvents
+      }));
+    } catch (error) {
+      console.warn("Could not save Puppy Log event cache:", error);
+    }
+  }
+
+  function mergeEvents(rows) {
+    const merged = new Map(state.events.map(event => [event.id, event]));
+    (rows || []).forEach(event => merged.set(event.id, event));
+    state.events = [...merged.values()]
+      .sort((a, b) => new Date(b.event_time) - new Date(a.event_time));
   }
 
   function sameLocalDay(a, b) {
@@ -496,6 +667,19 @@
     return tr("unknownRecorder");
   }
 
+  function findEventById(id) {
+    return state.events.find(event => event.id === id)
+      || state.historyEvents.find(event => event.id === id)
+      || null;
+  }
+
+  function eventActionsHtml(event) {
+    return `<div class="event-actions">
+      <button data-edit="${escapeHtml(event.id)}" type="button">${escapeHtml(tr("edit"))}</button>
+      <button data-delete="${escapeHtml(event.id)}" type="button">${escapeHtml(tr("delete"))}</button>
+    </div>`;
+  }
+
   function historyTitleKey(type) {
     return ({
       pee: "peeHistoryTitle",
@@ -515,6 +699,20 @@
     return new Intl.DateTimeFormat(currentLanguage === "zh" ? "zh-CN" : "en-US", {
       month: "short", day: "numeric"
     }).format(new Date(iso));
+  }
+
+  function formatChartTickDate(timestamp, spanMs) {
+    const day = 24 * 60 * 60 * 1000;
+    let options;
+    if (spanMs <= 2 * day) {
+      options = {month: "numeric", day: "numeric", hour: "numeric"};
+    } else if (spanMs > 180 * day) {
+      options = {year: "2-digit", month: "short", day: "numeric"};
+    } else {
+      options = {month: "short", day: "numeric"};
+    }
+    return new Intl.DateTimeFormat(currentLanguage === "zh" ? "zh-CN" : "en-US", options)
+      .format(new Date(timestamp));
   }
 
   async function fetchHistoryEvents(type) {
@@ -538,6 +736,7 @@
         .eq("pet_id", state.pet.id)
         .eq("event_type", type)
         .order("event_time", {ascending: false})
+        .order("id", {ascending: false})
         .range(from, from + pageSize - 1);
 
       if (error) throw error;
@@ -578,6 +777,33 @@
     }
   }
 
+  function renderHistoryList(events) {
+    let lastDate = "";
+    $("historyList").innerHTML = events.map(event => {
+      const dateLabel = formatDate(event.event_time);
+      const separator = dateLabel !== lastDate
+        ? `<div class="date-sep">${escapeHtml(dateLabel)}</div>` : "";
+      lastDate = dateLabel;
+      const who = recorderName(event);
+      const amount = event.amount != null
+        ? ` · ${escapeHtml(event.amount)} ${escapeHtml(formatUnit(event.unit, event.amount))}` : "";
+      const info = TYPE[event.event_type] || TYPE.note;
+      return `${separator}
+        <div class="event-row history-event-row">
+          <div class="event-icon">${info.icon}</div>
+          <div class="event-main">
+            <b>${escapeHtml(tr(info.label))}${amount}</b>
+            <div class="meta"><span class="event-recorder">${escapeHtml(tr("recordedBy"))} <span class="recorder-name">${escapeHtml(who)}</span></span></div>
+            ${event.note ? `<div class="event-note">${escapeHtml(event.note)}</div>` : ""}
+          </div>
+          <div class="event-time">
+            <span>${escapeHtml(formatHistoryDateTime(event.event_time))}</span>
+            ${eventActionsHtml(event)}
+          </div>
+        </div>`;
+    }).join("");
+  }
+
   function renderHistoryDialog() {
     const type = state.historyType;
     if (!type || !TYPE[type]) return;
@@ -600,41 +826,16 @@
       return;
     }
 
-    if (type === "weight") {
-      renderWeightChart(events, petName);
-      return;
-    }
-
     if (!events.length) {
-      $("historyEmpty").textContent = tr("noTypeHistory", {
-        pet: petName,
-        type: tr(TYPE[type].label)
-      });
+      $("historyEmpty").textContent = type === "weight"
+        ? tr("noWeightHistory", {pet: petName})
+        : tr("noTypeHistory", {pet: petName, type: tr(TYPE[type].label)});
       $("historyEmpty").classList.remove("hidden");
       return;
     }
 
-    let lastDate = "";
-    $("historyList").innerHTML = events.map(event => {
-      const dateLabel = formatDate(event.event_time);
-      const separator = dateLabel !== lastDate
-        ? `<div class="date-sep">${escapeHtml(dateLabel)}</div>` : "";
-      lastDate = dateLabel;
-      const who = recorderName(event);
-      const amount = event.amount != null
-        ? ` · ${escapeHtml(event.amount)} ${escapeHtml(formatUnit(event.unit, event.amount))}` : "";
-      const info = TYPE[event.event_type] || TYPE.note;
-      return `${separator}
-        <div class="event-row history-event-row">
-          <div class="event-icon">${info.icon}</div>
-          <div class="event-main">
-            <b>${escapeHtml(tr(info.label))}${amount}</b>
-            <div class="meta"><span class="event-recorder">${escapeHtml(tr("recordedBy"))} <span class="recorder-name">${escapeHtml(who)}</span></span></div>
-            ${event.note ? `<div class="event-note">${escapeHtml(event.note)}</div>` : ""}
-          </div>
-          <div class="event-time">${escapeHtml(formatHistoryDateTime(event.event_time))}</div>
-        </div>`;
-    }).join("");
+    if (type === "weight") renderWeightChart(events, petName);
+    renderHistoryList(events);
   }
 
   function normalizedWeight(amount, fromUnit, toUnit) {
@@ -687,9 +888,13 @@
     minValue -= pad;
     maxValue += pad;
 
-    const xAt = index => points.length === 1
+    const times = points.map(point => new Date(point.event.event_time).getTime());
+    const minTime = Math.min(...times), maxTime = Math.max(...times);
+    const timeRange = maxTime - minTime;
+    const xAtTime = time => timeRange === 0
       ? margin.left + innerWidth / 2
-      : margin.left + index * innerWidth / (points.length - 1);
+      : margin.left + (time - minTime) * innerWidth / timeRange;
+    const xAt = index => xAtTime(times[index]);
     const yAt = value => margin.top + (maxValue - value) * innerHeight / (maxValue - minValue);
     const polyline = points.map((point, index) => `${xAt(index).toFixed(2)},${yAt(point.value).toFixed(2)}`).join(" ");
 
@@ -701,10 +906,14 @@
         <text class="chart-axis-label" x="${margin.left - 9}" y="${y + 4}" text-anchor="end">${escapeHtml(value.toFixed(1))}</text>`;
     }).join("");
 
-    const tickIndexes = [...new Set([0, Math.floor((points.length - 1) / 3), Math.floor(2 * (points.length - 1) / 3), points.length - 1])];
-    const xTicks = tickIndexes.map(index => {
-      const x = xAt(index);
-      return `<text class="chart-axis-label" x="${x}" y="${height - 18}" text-anchor="middle">${escapeHtml(formatShortDate(points[index].event.event_time))}</text>`;
+    const xTickCount = timeRange === 0 ? 1 : (compact ? 4 : 5);
+    const tickTimes = Array.from({length: xTickCount}, (_, index) => xTickCount === 1
+      ? minTime
+      : minTime + timeRange * index / (xTickCount - 1));
+    const xTicks = tickTimes.map(time => {
+      const x = xAtTime(time);
+      return `<line class="chart-time-grid-line" x1="${x}" x2="${x}" y1="${margin.top}" y2="${height - margin.bottom}"/>
+        <text class="chart-axis-label" x="${x}" y="${height - 18}" text-anchor="middle">${escapeHtml(formatChartTickDate(time, timeRange))}</text>`;
     }).join("");
 
     const circles = points.map((point, index) => {
@@ -714,7 +923,9 @@
         value: valueText,
         unit
       });
-      const label = points.length <= 10
+      const previousGap = index > 0 ? xAt(index) - xAt(index - 1) : Infinity;
+      const nextGap = index < points.length - 1 ? xAt(index + 1) - xAt(index) : Infinity;
+      const label = points.length <= 10 && Math.min(previousGap, nextGap) >= 30
         ? `<text class="chart-value-label" x="${xAt(index)}" y="${yAt(point.value) - 10}" text-anchor="middle">${escapeHtml(valueText)}</text>` : "";
       return `${label}<circle class="chart-point" cx="${xAt(index)}" cy="${yAt(point.value)}" r="5" tabindex="0"><title>${escapeHtml(title)}</title></circle>`;
     }).join("");
@@ -723,11 +934,11 @@
     $("historyChart").setAttribute("aria-label", aria);
     $("historyChart").innerHTML = `<svg aria-hidden="true" class="weight-chart-svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 ${width} ${height}">
       ${yTicks}
+      ${xTicks}
       <line class="chart-axis-line" x1="${margin.left}" x2="${margin.left}" y1="${margin.top}" y2="${height - margin.bottom}"/>
       <line class="chart-axis-line" x1="${margin.left}" x2="${width - margin.right}" y1="${height - margin.bottom}" y2="${height - margin.bottom}"/>
       <polyline class="chart-line" fill="none" points="${polyline}"/>
       ${circles}
-      ${xTicks}
       <text class="chart-unit-label" x="${margin.left}" y="17">${escapeHtml(unit)}</text>
     </svg>`;
     $("historyChart").classList.remove("hidden");
@@ -737,14 +948,154 @@
     return state.household ? `puppy-log-selected-pet-${state.household.id}` : "puppy-log-selected-pet";
   }
 
+  function reminderStorageKey(petId = state.pet?.id) {
+    const householdId = state.household?.id || "local";
+    return `puppy-log-outing-reminder-${householdId}-${petId || "none"}`;
+  }
+
+  function getReminderSettings(petId = state.pet?.id) {
+    const fallback = {enabled: true, hours: 4};
+    if (!petId) return fallback;
+    try {
+      const saved = JSON.parse(localStorage.getItem(reminderStorageKey(petId)) || "null");
+      if (!saved || typeof saved !== "object") return fallback;
+      const hours = Number(saved.hours);
+      if (saved.enabled === false) return {enabled: false, hours: Number.isFinite(hours) ? hours : 4};
+      if (!Number.isFinite(hours) || hours < 0.5 || hours > 24) return fallback;
+      return {enabled: true, hours};
+    } catch (error) {
+      console.warn("Invalid Puppy Log reminder settings:", error);
+      return fallback;
+    }
+  }
+
+  function setReminderSettings(settings, petId = state.pet?.id) {
+    if (!petId) return;
+    localStorage.setItem(reminderStorageKey(petId), JSON.stringify(settings));
+  }
+
+  function formatHoursValue(hours) {
+    return new Intl.NumberFormat(currentLanguage === "zh" ? "zh-CN" : "en-US", {
+      maximumFractionDigits: 1
+    }).format(Number(hours));
+  }
+
+  function formatDuration(milliseconds) {
+    const totalMinutes = Math.max(1, Math.ceil(Math.abs(milliseconds) / 60000));
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    if (!hours) return tr("durationMinutes", {minutes});
+    if (!minutes) return tr("durationHours", {hours});
+    return tr("durationHoursMinutes", {hours, minutes});
+  }
+
+  function renderReminderSettings() {
+    if (!$("reminderPreset") || !state.pet) return;
+    const settings = getReminderSettings();
+    $("reminderPetName").textContent = state.pet.name || "Puppy";
+    let preset = "custom";
+    if (!settings.enabled) preset = "off";
+    else if (Math.abs(settings.hours - 4) < 0.001) preset = "4";
+    else if (Math.abs(settings.hours - 6.5) < 0.001) preset = "6.5";
+    $("reminderPreset").value = preset;
+    $("reminderCustomHours").value = String(settings.hours || 4);
+    $("reminderCustomRow").classList.toggle("hidden", preset !== "custom");
+  }
+
+  function renderOutingReminder() {
+    const panel = $("outingReminder");
+    if (!panel) return;
+    if (!state.pet) {
+      panel.classList.add("hidden");
+      return;
+    }
+
+    const settings = getReminderSettings();
+    if (!settings.enabled) {
+      panel.classList.add("hidden");
+      return;
+    }
+
+    panel.classList.remove("hidden", "reminder-soon", "reminder-overdue");
+    const petName = state.pet.name || tr("thisDog");
+    const lastPee = latest("pee");
+    const hours = formatHoursValue(settings.hours);
+
+    if (!lastPee) {
+      $("outingReminderStatus").textContent = tr("reminderNoPee", {pet: petName});
+      $("outingReminderDetail").textContent = tr("reminderWaitingDetail", {hours});
+      return;
+    }
+
+    const dueAt = new Date(lastPee.event_time).getTime() + settings.hours * 60 * 60 * 1000;
+    const remaining = dueAt - Date.now();
+    if (remaining <= 0) {
+      panel.classList.add("reminder-overdue");
+      $("outingReminderStatus").textContent = tr("reminderOverdue", {
+        pet: petName,
+        overdue: formatDuration(remaining)
+      });
+    } else if (remaining <= 30 * 60 * 1000) {
+      panel.classList.add("reminder-soon");
+      $("outingReminderStatus").textContent = tr("reminderDueSoon", {
+        pet: petName,
+        remaining: formatDuration(remaining)
+      });
+    } else {
+      $("outingReminderStatus").textContent = tr("reminderNext", {
+        pet: petName,
+        remaining: formatDuration(remaining)
+      });
+    }
+    $("outingReminderDetail").textContent = tr("reminderBasedOn", {
+      time: formatClock(lastPee.event_time),
+      hours
+    });
+  }
+
+  function updateReminderCustomVisibility() {
+    $("reminderCustomRow").classList.toggle("hidden", $("reminderPreset").value !== "custom");
+  }
+
+  function saveReminderSettings() {
+    if (!state.pet) return;
+    const preset = $("reminderPreset").value;
+    if (preset === "off") {
+      setReminderSettings({enabled: false, hours: getReminderSettings().hours || 4});
+      renderAll();
+      toast("reminderDisabled", {pet: state.pet.name});
+      return;
+    }
+
+    const hours = preset === "custom" ? Number($("reminderCustomHours").value) : Number(preset);
+    if (!Number.isFinite(hours) || hours < 0.5 || hours > 24) {
+      toast("invalidReminderHours");
+      $("reminderCustomHours").focus();
+      return;
+    }
+
+    setReminderSettings({enabled: true, hours});
+    renderAll();
+    toast("reminderSaved", {pet: state.pet.name});
+  }
+
+  function openSettingsDialog(focusReminder = false) {
+    renderReminderSettings();
+    if (!$("settingsDialog").open) $("settingsDialog").showModal();
+    if (focusReminder) {
+      requestAnimationFrame(() => $("reminderSettingsSection").scrollIntoView({block: "center"}));
+    }
+  }
+
   function latest(type) {
-    return state.events.find(e => e.event_type === type);
+    return state.latestByType[type] || state.events.find(event => event.event_type === type);
   }
 
   function setCloudUI() {
     $("demoBanner").classList.toggle("hidden", !state.demo);
     $("syncPill").textContent = tr(state.demo ? "localDemo" : "cloudSync");
-    $("settingsBtn").classList.toggle("hidden", state.demo || !state.session);
+    $("settingsBtn").classList.toggle("hidden", !state.demo && !state.session);
+    $("signOutBtn").classList.toggle("hidden", state.demo);
   }
 
   function showView(name) {
@@ -775,12 +1126,43 @@
     state.historyRequestId += 1;
     if ($("historyDialog")?.open) $("historyDialog").close();
     localStorage.setItem(petStorageKey(), next.id);
-    state.events = [];
+    resetEventWindow();
     renderAll();
     await fetchEvents();
   }
 
-  function demoLoad() {
+  function readDemoEvents() {
+    try {
+      return JSON.parse(localStorage.getItem("puppy-log-demo-events") || "[]");
+    } catch (error) {
+      console.warn("Invalid Puppy Log demo events:", error);
+      return [];
+    }
+  }
+
+  function writeDemoEvents(events) {
+    localStorage.setItem("puppy-log-demo-events", JSON.stringify(events));
+  }
+
+  function demoEventsForPet(petId = state.pet?.id) {
+    return readDemoEvents()
+      .filter(event => event.pet_id === petId)
+      .sort((a, b) => new Date(b.event_time) - new Date(a.event_time));
+  }
+
+  function demoUpsertEvent(item) {
+    const all = readDemoEvents();
+    const index = all.findIndex(event => event.id === item.id);
+    if (index >= 0) all[index] = item;
+    else all.push(item);
+    writeDemoEvents(all);
+  }
+
+  function demoDeleteEvent(id) {
+    writeDemoEvents(readDemoEvents().filter(event => event.id !== id));
+  }
+
+  async function demoLoad() {
     state.household = { id:"demo", name:"Our Puppy", invite_code:"DEMO2026" };
     state.member = { household_id:"demo", user_id:"demo-user", display_name:"我" };
     state.pets = JSON.parse(localStorage.getItem("puppy-log-demo-pets") || "null") || [
@@ -788,17 +1170,9 @@
     ];
     chooseInitialPet();
     state.members = {"demo-user":"我", "demo-partner":"Partner"};
-    const all = JSON.parse(localStorage.getItem("puppy-log-demo-events") || "[]");
-    state.events = all.filter(e => e.pet_id === state.pet?.id)
-      .sort((a,b)=>new Date(b.event_time)-new Date(a.event_time));
+    resetEventWindow();
     showView("app");
-    renderAll();
-  }
-
-  function demoSaveEvents() {
-    const all = JSON.parse(localStorage.getItem("puppy-log-demo-events") || "[]");
-    const otherPets = all.filter(e => e.pet_id !== state.pet?.id);
-    localStorage.setItem("puppy-log-demo-events", JSON.stringify([...otherPets, ...state.events]));
+    await fetchEvents();
   }
 
   function demoSavePets() {
@@ -869,6 +1243,7 @@
     state.pets = pets || [];
     chooseInitialPet();
     state.members = Object.fromEntries((members || []).map(m => [m.user_id, m.display_name]));
+    resetEventWindow();
     showView("app");
     await fetchEvents();
     subscribeRealtime();
@@ -892,45 +1267,221 @@
     if (selectId) {
       state.pet = state.pets.find(p => p.id === selectId) || state.pets[0] || null;
       if (state.pet) localStorage.setItem(petStorageKey(), state.pet.id);
+      resetEventWindow();
     } else if (!state.pets.some(p => p.id === state.pet?.id)) {
       chooseInitialPet();
+      resetEventWindow();
     }
     renderAll();
   }
 
-  async function fetchEvents() {
-    if (!state.pet) {
-      state.events = [];
-      renderAll();
+  async function refreshMembers() {
+    if (state.demo || !state.household) return;
+    const householdId = state.household.id;
+    const {data, error} = await state.supabase.from("puppy_household_members")
+      .select("user_id,display_name")
+      .eq("household_id", householdId);
+    if (error) {
+      console.warn("Puppy Log member lookup failed:", error);
       return;
     }
-
-    if (state.demo) {
-      const all = JSON.parse(localStorage.getItem("puppy-log-demo-events") || "[]");
-      state.events = all.filter(e => e.pet_id === state.pet.id)
-        .sort((a,b)=>new Date(b.event_time)-new Date(a.event_time));
-      renderAll();
-      return;
-    }
-
-    const petId = state.pet.id, householdId = state.household.id;
-    const [eventResult, memberResult] = await Promise.all([
-      state.supabase.from("puppy_events").select("*")
-        .eq("household_id", householdId).eq("pet_id", petId)
-        .order("event_time", {ascending:false}).limit(state.limit),
-      state.supabase.from("puppy_household_members").select("user_id,display_name")
-        .eq("household_id", householdId)
-    ]);
-    // Ignore an obsolete response after switching dogs or signing out.
-    if (state.pet?.id !== petId || state.household?.id !== householdId || !state.session) return;
-    if (eventResult.error) { showError(eventResult.error); return; }
-    if (memberResult.error) {
-      console.warn("Puppy Log member lookup failed:", memberResult.error);
-    } else {
-      state.members = Object.fromEntries((memberResult.data || []).map(m => [m.user_id, m.display_name]));
-    }
-    state.events = eventResult.data || [];
+    if (state.household?.id !== householdId) return;
+    state.members = Object.fromEntries((data || []).map(member => [member.user_id, member.display_name]));
     renderAll();
+  }
+
+  const LATEST_TYPES = ["pee", "poop", "meal", "weight"];
+
+  function latestMapFromEvents(events) {
+    const latest = {};
+    for (const event of events || []) {
+      if (LATEST_TYPES.includes(event.event_type) && !latest[event.event_type]) {
+        latest[event.event_type] = event;
+      }
+    }
+    return latest;
+  }
+
+  async function fetchCloudEventPages({petId, householdId, afterIso = null, beforeIso = null, type = null}) {
+    const rows = [];
+    const pageSize = 500;
+    let from = 0;
+
+    while (true) {
+      let query = state.supabase.from("puppy_events").select("*")
+        .eq("household_id", householdId)
+        .eq("pet_id", petId);
+      if (type) query = query.eq("event_type", type);
+      if (afterIso) query = query.gte("event_time", afterIso);
+      if (beforeIso) query = query.lt("event_time", beforeIso);
+      const {data, error} = await query
+        .order("event_time", {ascending: false})
+        .order("id", {ascending: false})
+        .range(from, from + pageSize - 1);
+      if (error) throw error;
+      rows.push(...(data || []));
+      if (!data || data.length < pageSize) break;
+      from += pageSize;
+    }
+    return rows;
+  }
+
+  async function fetchCloudLatestEvents(petId, householdId) {
+    const pairs = await Promise.all(LATEST_TYPES.map(async type => {
+      const {data, error} = await state.supabase.from("puppy_events").select("*")
+        .eq("household_id", householdId)
+        .eq("pet_id", petId)
+        .eq("event_type", type)
+        .order("event_time", {ascending: false})
+        .limit(1);
+      if (error) throw error;
+      return [type, data?.[0] || null];
+    }));
+    return Object.fromEntries(pairs.filter(([, event]) => event));
+  }
+
+  async function cloudHasEventsBefore(petId, householdId, beforeIso) {
+    const {data, error} = await state.supabase.from("puppy_events").select("id")
+      .eq("household_id", householdId)
+      .eq("pet_id", petId)
+      .lt("event_time", beforeIso)
+      .order("event_time", {ascending: false})
+      .limit(1);
+    if (error) throw error;
+    return Boolean(data?.length);
+  }
+
+  async function fetchEvents({resetWindow = false, useCache = true} = {}) {
+    if (!state.pet) {
+      resetEventWindow();
+      renderAll();
+      return;
+    }
+    if (resetWindow || !state.weekAnchor) resetEventWindow();
+
+    const petId = state.pet.id;
+    const householdId = state.household?.id || "demo";
+    const startIso = loadedWindowStart().toISOString();
+    if (!state.demo && useCache && state.loadedWeeks === 1 && !state.allEventsLoaded && !state.events.length) {
+      if (hydrateEventCache(petId, householdId, startIso)) renderAll();
+    }
+    state.eventsLoading = true;
+    renderTimelineControls();
+
+    try {
+      if (state.demo) {
+        const all = demoEventsForPet(petId);
+        state.events = state.allEventsLoaded
+          ? all
+          : all.filter(event => new Date(event.event_time) >= new Date(startIso));
+        state.latestByType = latestMapFromEvents(all);
+        state.hasOlderEvents = !state.allEventsLoaded
+          && all.some(event => new Date(event.event_time) < new Date(startIso));
+        state.eventsLoading = false;
+        renderAll();
+        return;
+      }
+
+      const [events, latestByType, hasOlder] = await Promise.all([
+        state.allEventsLoaded
+          ? fetchCloudEventPages({petId, householdId})
+          : fetchCloudEventPages({petId, householdId, afterIso: startIso}),
+        fetchCloudLatestEvents(petId, householdId),
+        state.allEventsLoaded
+          ? Promise.resolve(false)
+          : cloudHasEventsBefore(petId, householdId, startIso)
+      ]);
+
+      // Ignore an obsolete response after switching dogs, households, or signing out.
+      if (state.pet?.id !== petId || state.household?.id !== householdId || !state.session) return;
+      state.events = events;
+      state.latestByType = latestByType;
+      state.hasOlderEvents = hasOlder;
+      state.eventsLoading = false;
+      saveEventCache(petId, householdId);
+      renderAll();
+    } catch (error) {
+      if (state.pet?.id === petId) {
+        state.eventsLoading = false;
+        renderTimelineControls();
+        showError(error);
+      }
+    }
+  }
+
+  async function loadPreviousWeek() {
+    if (!state.pet || state.eventsLoading || state.allEventsLoaded || !state.hasOlderEvents) return;
+
+    const petId = state.pet.id;
+    const householdId = state.household?.id || "demo";
+    const previousStart = loadedWindowStart();
+    const nextStart = new Date(previousStart);
+    nextStart.setDate(nextStart.getDate() - 7);
+    state.eventsLoading = true;
+    renderTimelineControls();
+
+    try {
+      let rows, hasOlder;
+      if (state.demo) {
+        const all = demoEventsForPet(petId);
+        rows = all.filter(event => {
+          const time = new Date(event.event_time);
+          return time >= nextStart && time < previousStart;
+        });
+        hasOlder = all.some(event => new Date(event.event_time) < nextStart);
+      } else {
+        [rows, hasOlder] = await Promise.all([
+          fetchCloudEventPages({
+            petId,
+            householdId,
+            afterIso: nextStart.toISOString(),
+            beforeIso: previousStart.toISOString()
+          }),
+          cloudHasEventsBefore(petId, householdId, nextStart.toISOString())
+        ]);
+      }
+
+      if (state.pet?.id !== petId || state.household?.id !== householdId) return;
+      state.loadedWeeks += 1;
+      mergeEvents(rows);
+      state.hasOlderEvents = hasOlder;
+      state.eventsLoading = false;
+      renderAll();
+    } catch (error) {
+      if (state.pet?.id === petId) {
+        state.eventsLoading = false;
+        renderTimelineControls();
+        showError(error);
+      }
+    }
+  }
+
+  async function loadAllEvents() {
+    if (!state.pet || state.eventsLoading || state.allEventsLoaded || !state.hasOlderEvents) return;
+
+    const petId = state.pet.id;
+    const householdId = state.household?.id || "demo";
+    const beforeIso = loadedWindowStart().toISOString();
+    state.eventsLoading = true;
+    renderTimelineControls();
+
+    try {
+      const older = state.demo
+        ? demoEventsForPet(petId).filter(event => new Date(event.event_time) < new Date(beforeIso))
+        : await fetchCloudEventPages({petId, householdId, beforeIso});
+      if (state.pet?.id !== petId || state.household?.id !== householdId) return;
+      mergeEvents(older);
+      state.allEventsLoaded = true;
+      state.hasOlderEvents = false;
+      state.eventsLoading = false;
+      renderAll();
+    } catch (error) {
+      if (state.pet?.id === petId) {
+        state.eventsLoading = false;
+        renderTimelineControls();
+        showError(error);
+      }
+    }
   }
 
   function subscribeRealtime() {
@@ -941,11 +1492,15 @@
       .on("postgres_changes", {
         event: "*", schema: "public", table: "puppy_events",
         filter: `household_id=eq.${state.household.id}`
-      }, () => fetchEvents())
+      }, () => fetchEvents({useCache: false}))
       .on("postgres_changes", {
         event: "*", schema: "public", table: "puppy_pets",
         filter: `household_id=eq.${state.household.id}`
       }, () => refreshPets())
+      .on("postgres_changes", {
+        event: "*", schema: "public", table: "puppy_household_members",
+        filter: `household_id=eq.${state.household.id}`
+      }, () => refreshMembers())
       .subscribe();
   }
 
@@ -993,10 +1548,34 @@
     if (state.household) $("settingsInvite").textContent = state.household.invite_code || "—";
 
     renderPetControls();
+    renderOutingReminder();
+    renderReminderSettings();
     renderTimeline();
   }
 
+  function renderTimelineControls() {
+    const scope = $("timelineScope");
+    const loadPrevious = $("loadMoreBtn");
+    const loadAll = $("loadAllBtn");
+    if (!scope || !loadPrevious || !loadAll) return;
+
+    scope.textContent = state.allEventsLoaded
+      ? tr("timelineAll")
+      : state.loadedWeeks === 1
+        ? tr("timelineThisWeek")
+        : tr("timelineWeeks", {count: state.loadedWeeks});
+
+    const showArchiveActions = state.hasOlderEvents && !state.allEventsLoaded;
+    loadPrevious.classList.toggle("hidden", !showArchiveActions);
+    loadAll.classList.toggle("hidden", !showArchiveActions);
+    loadPrevious.disabled = state.eventsLoading;
+    loadAll.disabled = state.eventsLoading;
+    loadPrevious.textContent = tr(state.eventsLoading ? "loadingEarlier" : "loadPreviousWeek");
+    loadAll.textContent = tr("loadAllRecords");
+  }
+
   function renderTimeline() {
+    renderTimelineControls();
     let events = state.events;
     if (state.filter === "today") {
       const today = startOfToday();
@@ -1004,8 +1583,20 @@
     }
 
     const holder = $("timeline");
+    holder.setAttribute("aria-busy", state.eventsLoading ? "true" : "false");
     if (!events.length) {
-      holder.innerHTML = `<div class="timeline-empty">${escapeHtml(tr("emptyTimeline", {pet: state.pet?.name || tr("thisDog")}))}<br>${escapeHtml(tr("firstRecordHint"))}</div>`;
+      const pet = state.pet?.name || tr("thisDog");
+      let lines;
+      if (state.filter === "today") {
+        lines = [tr("noRecordsToday", {pet})];
+      } else if (state.loadedWeeks === 1 && state.hasOlderEvents) {
+        lines = [tr("noRecordsThisWeek", {pet}), tr("olderRecordsHint")];
+      } else if (state.hasOlderEvents) {
+        lines = [tr("noRecordsLoadedPeriod", {pet}), tr("olderRecordsHint")];
+      } else {
+        lines = [tr("emptyTimeline", {pet}), tr("firstRecordHint")];
+      }
+      holder.innerHTML = `<div class="timeline-empty">${lines.map(escapeHtml).join("<br>")}</div>`;
       return;
     }
 
@@ -1026,70 +1617,149 @@
             ${e.note ? `<div class="event-note">${escapeHtml(e.note)}</div>` : ""}
           </div>
           <div class="event-time">
-            ${escapeHtml(formatClock(e.event_time))}
-            <button data-delete="${escapeHtml(e.id)}">${escapeHtml(tr("delete"))}</button>
+            <span>${escapeHtml(formatClock(e.event_time))}</span>
+            ${eventActionsHtml(e)}
           </div>
         </div>`;
     }).join("");
   }
 
-  function openLog(type) {
+  function configureLogType(type, selectedUnit = "", clearIncompatibleAmount = false) {
+    const info = TYPE[type] || TYPE.note;
+    $("eventType").value = type;
+    $("eventTypeSelect").value = type;
+
+    const units = [...info.units];
+    if (selectedUnit && !units.includes(selectedUnit)) units.push(selectedUnit);
+    $("eventUnit").innerHTML = units.length
+      ? units.map(unit => `<option value="${escapeHtml(unit)}">${escapeHtml(formatUnit(unit))}</option>`).join("")
+      : `<option value="">—</option>`;
+    $("amountRow").classList.toggle("hidden", !units.length);
+    $("eventAmount").required = type === "weight";
+
+    if (!units.length) {
+      $("eventUnit").value = "";
+      if (clearIncompatibleAmount) $("eventAmount").value = "";
+    } else if (selectedUnit && units.includes(selectedUnit)) {
+      $("eventUnit").value = selectedUnit;
+    } else if (type === "weight") {
+      $("eventUnit").value = "lb";
+    } else {
+      $("eventUnit").value = units[0] || "";
+    }
+    renderLogText();
+  }
+
+  function clearLogEditingState() {
+    state.editingEventId = null;
+    state.returnHistoryType = null;
+    $("eventId").value = "";
+    $("eventTypeRow").classList.add("hidden");
+  }
+
+  function closeLogDialog(reopenHistory = false) {
+    const historyType = state.returnHistoryType;
+    if ($("logDialog").open) $("logDialog").close();
+    clearLogEditingState();
+    renderLogText();
+    if (reopenHistory && historyType) openHistory(historyType);
+  }
+
+  function openLog(type, event = null, returnHistoryType = null) {
     if (!state.pet) {
       toast("addDogFirst");
       return;
     }
 
-    const t = TYPE[type];
-    $("eventType").value = type;
-    $("dialogTitle").textContent = `${t.icon} ${tr(t.label)}`;
-    $("dialogPetName").textContent = tr("logFor", {pet: state.pet.name});
-    $("eventTime").value = localDatetimeValue();
-    $("eventAmount").value = "";
-    $("eventNote").value = "";
-    $("eventUnit").innerHTML = t.units.length
-      ? t.units.map(u => `<option value="${escapeHtml(u)}">${escapeHtml(formatUnit(u))}</option>`).join("")
-      : `<option value="">—</option>`;
-    $("amountRow").classList.toggle("hidden", !t.units.length);
-
-    if (type === "weight") {
-      $("eventAmount").required = true;
-      $("eventUnit").value = "lb";
-    } else {
-      $("eventAmount").required = false;
-    }
-
-    $("dialogEyebrow").textContent = tr("eyebrowAdd");
+    const info = TYPE[type];
+    if (!info) return;
+    state.editingEventId = event?.id || null;
+    state.returnHistoryType = returnHistoryType;
+    $("eventId").value = event?.id || "";
+    configureLogType(type, event?.unit || "", true);
+    $("eventTime").value = event?.event_time
+      ? localDatetimeValue(new Date(event.event_time))
+      : localDatetimeValue();
+    $("eventAmount").value = event?.amount ?? "";
+    $("eventNote").value = event?.note || "";
+    renderLogText();
     $("logDialog").showModal();
+  }
+
+  function openEditEvent(id, fromHistory = false) {
+    const event = findEventById(id);
+    if (!event) {
+      toast("recordNotFound");
+      return;
+    }
+    const returnHistoryType = fromHistory ? state.historyType : null;
+    if (fromHistory && $("historyDialog").open) {
+      state.historyRequestId += 1;
+      $("historyDialog").close();
+    }
+    openLog(event.event_type, event, returnHistoryType);
   }
 
   async function saveEvent(formEvent) {
     formEvent.preventDefault();
     if (!state.pet) return;
 
+    const editingId = state.editingEventId;
+    const returnHistoryType = state.returnHistoryType;
     const recorderId = state.demo ? "demo-user" : state.session?.user?.id;
     if (!recorderId) { toast("signInRequired"); return; }
     const type = $("eventType").value;
     const rawAmount = $("eventAmount").value.trim();
+    const values = {
+      event_type: type,
+      event_time: new Date($("eventTime").value).toISOString(),
+      amount: rawAmount === "" ? null : Number(rawAmount),
+      unit: $("eventUnit").value || null,
+      note: $("eventNote").value.trim() || null
+    };
+
+    if (editingId) {
+      const existing = findEventById(editingId);
+      if (!existing) { toast("recordNotFound"); return; }
+
+      if (state.demo) {
+        demoUpsertEvent({...existing, ...values});
+      } else {
+        const {data, error} = await state.supabase.from("puppy_events")
+          .update(values)
+          .eq("id", editingId)
+          .eq("household_id", state.household.id)
+          .eq("pet_id", state.pet.id)
+          .select("id")
+          .maybeSingle();
+        if (error || !data) {
+          showError(error || new Error("Puppy Log update was not permitted."));
+          return;
+        }
+      }
+
+      if ($("logDialog").open) $("logDialog").close();
+      clearLogEditingState();
+      toast("recordUpdated");
+      await fetchEvents({useCache: false});
+      if (returnHistoryType) await openHistory(returnHistoryType);
+      return;
+    }
+
     const item = {
       id: crypto.randomUUID(),
       household_id: state.household?.id || "demo",
       pet_id: state.pet.id,
       user_id: recorderId,
-      event_type: type,
-      event_time: new Date($("eventTime").value).toISOString(),
-      amount: rawAmount === "" ? null : Number(rawAmount),
-      unit: $("eventUnit").value || null,
-      note: $("eventNote").value.trim() || null,
+      ...values,
       created_at: new Date().toISOString()
     };
 
     if (state.demo) {
-      state.events.unshift(item);
-      state.events.sort((a,b)=>new Date(b.event_time)-new Date(a.event_time));
-      demoSaveEvents();
-      renderAll();
-      $("logDialog").close();
+      demoUpsertEvent(item);
+      closeLogDialog(false);
       toast("savedTo", {pet: state.pet.name});
+      await fetchEvents({useCache: false});
       return;
     }
 
@@ -1100,24 +1770,24 @@
     const { error } = await state.supabase.from("puppy_events").insert(cloudItem);
     if (error) { showError(error); return; }
 
-    $("logDialog").close();
+    closeLogDialog(false);
     toast("syncedTo", {pet: state.pet.name});
-    await fetchEvents();
+    await fetchEvents({useCache: false});
   }
 
-  async function deleteEvent(id) {
+  async function deleteEvent(id, fromHistory = false) {
     if (!confirm(tr("deleteConfirm"))) return;
+    const historyType = fromHistory ? state.historyType : null;
 
     if (state.demo) {
-      state.events = state.events.filter(e => e.id !== id);
-      demoSaveEvents();
-      renderAll();
-      return;
+      demoDeleteEvent(id);
+    } else {
+      const { error } = await state.supabase.from("puppy_events").delete().eq("id", id);
+      if (error) { showError(error); return; }
     }
 
-    const { error } = await state.supabase.from("puppy_events").delete().eq("id", id);
-    if (error) { showError(error); return; }
-    await fetchEvents();
+    await fetchEvents({useCache: false});
+    if (historyType) await openHistory(historyType);
   }
 
   function openAddPet() {
@@ -1141,7 +1811,7 @@
       demoSavePets();
       state.pet = pet;
       localStorage.setItem(petStorageKey(), pet.id);
-      state.events = [];
+      resetEventWindow();
       $("addPetDialog").close();
       $("settingsDialog").close();
       renderAll();
@@ -1192,18 +1862,37 @@
     $$(".quick-btn").forEach(btn => btn.addEventListener("click", () => openLog(btn.dataset.type)));
     $$("[data-history-type]").forEach(btn => btn.addEventListener("click", () => openHistory(btn.dataset.historyType)));
 
-    $("closeDialogBtn").addEventListener("click", () => $("logDialog").close());
+    $("closeDialogBtn").addEventListener("click", () => closeLogDialog(true));
     $("closeHistoryBtn").addEventListener("click", () => {
       state.historyRequestId += 1;
       $("historyDialog").close();
     });
-    $("cancelDialogBtn").addEventListener("click", () => $("logDialog").close());
+    $("cancelDialogBtn").addEventListener("click", () => closeLogDialog(true));
+    $("logDialog").addEventListener("cancel", (event) => {
+      event.preventDefault();
+      closeLogDialog(true);
+    });
+    $("eventTypeSelect").addEventListener("change", () => {
+      configureLogType($("eventTypeSelect").value, "", true);
+    });
     $("logForm").addEventListener("submit", saveEvent);
 
     $("timeline").addEventListener("click", (e) => {
-      const btn = e.target.closest("[data-delete]");
-      if (btn) deleteEvent(btn.dataset.delete);
+      const edit = e.target.closest("[data-edit]");
+      if (edit) { openEditEvent(edit.dataset.edit, false); return; }
+      const remove = e.target.closest("[data-delete]");
+      if (remove) deleteEvent(remove.dataset.delete, false);
     });
+
+    $("historyList").addEventListener("click", (e) => {
+      const edit = e.target.closest("[data-edit]");
+      if (edit) { openEditEvent(edit.dataset.edit, true); return; }
+      const remove = e.target.closest("[data-delete]");
+      if (remove) deleteEvent(remove.dataset.delete, true);
+    });
+
+    $("loadMoreBtn").addEventListener("click", loadPreviousWeek);
+    $("loadAllBtn").addEventListener("click", loadAllEvents);
 
     $$(".filter-btn").forEach(btn => btn.addEventListener("click", () => {
       state.filter = btn.dataset.filter;
@@ -1214,7 +1903,11 @@
     bindPetClick($("petSwitcher"));
     bindPetClick($("settingsPetList"));
 
-    $("settingsBtn").addEventListener("click", () => $("settingsDialog").showModal());
+    $("settingsBtn").addEventListener("click", () => openSettingsDialog(false));
+    $("reminderSettingsBtn").addEventListener("click", () => openSettingsDialog(true));
+    $("reminderLogPeeBtn").addEventListener("click", () => openLog("pee"));
+    $("reminderPreset").addEventListener("change", updateReminderCustomVisibility);
+    $("saveReminderBtn").addEventListener("click", saveReminderSettings);
     $("closeSettingsBtn").addEventListener("click", () => $("settingsDialog").close());
     $("addPetBtn").addEventListener("click", openAddPet);
     $("closeAddPetBtn").addEventListener("click", () => $("addPetDialog").close());
@@ -1322,7 +2015,7 @@
       state.members = {};
       state.pets = [];
       state.pet = null;
-      state.events = [];
+      resetEventWindow();
       state.historyRequestId += 1;
       state.historyType = null;
       state.historyEvents = [];
@@ -1341,11 +2034,16 @@
     bindUI();
     applyLanguage();
 
-    if (state.demo) demoLoad();
+    if (state.demo) await demoLoad();
     else await initCloud();
 
     setInterval(() => {
-      if (!$("appView").classList.contains("hidden")) renderAll();
+      if ($("appView").classList.contains("hidden")) return;
+      if (state.weekAnchor && state.weekAnchor !== currentWeekAnchor() && !state.eventsLoading) {
+        fetchEvents({resetWindow: true});
+        return;
+      }
+      renderAll();
     }, 60000);
   }
 

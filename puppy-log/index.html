@@ -9,8 +9,8 @@
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
 <meta content="Puppy Log" name="apple-mobile-web-app-title"/>
 <title>Puppy Log · 小狗成长日志</title>
-<link href="./manifest.webmanifest?v=7" rel="manifest"/>
-<link href="./styles.css?v=7" rel="stylesheet"/>
+<link href="./manifest.webmanifest?v=9" rel="manifest"/>
+<link href="./styles.css?v=9" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -122,6 +122,20 @@
 <div><small data-i18n="latestWeight">最新体重</small><strong id="latestWeight">—</strong></div>
 </button>
 </section>
+<section aria-live="polite" class="outing-reminder" id="outingReminder">
+<div class="outing-reminder-main">
+<span aria-hidden="true" class="outing-reminder-icon">⏰</span>
+<div class="outing-reminder-copy">
+<small data-i18n="outingReminder">出门提醒</small>
+<strong id="outingReminderStatus">—</strong>
+<span id="outingReminderDetail"></span>
+</div>
+</div>
+<div class="outing-reminder-actions">
+<button class="secondary compact" data-i18n="logPeeNow" id="reminderLogPeeBtn" type="button">记录小便</button>
+<button class="text-btn" data-i18n="reminderSettings" id="reminderSettingsBtn" type="button">提醒设置</button>
+</div>
+</section>
 <section class="panel quick-panel">
 <div class="panel-title">
 <div>
@@ -157,7 +171,13 @@
 </div>
 </div>
 <div class="timeline" id="timeline"></div>
-<button class="secondary full hidden" data-i18n="loadEarlier" id="loadMoreBtn">加载更早记录</button>
+<div class="timeline-archive-controls">
+  <span class="timeline-scope" id="timelineScope">本周记录</span>
+  <div class="timeline-load-actions">
+    <button class="secondary compact hidden" data-i18n="loadPreviousWeek" id="loadMoreBtn" type="button">加载上一周</button>
+    <button class="text-btn hidden" data-i18n="loadAllRecords" id="loadAllBtn" type="button">加载全部</button>
+  </div>
+</div>
 </section>
 </section>
 </main>
@@ -171,7 +191,18 @@
 </div>
 <button aria-label="关闭" class="icon-btn" data-i18n-aria-label="close" id="closeDialogBtn" type="button">×</button>
 </div>
+<input id="eventId" type="hidden"/>
 <input id="eventType" type="hidden"/>
+<label class="hidden" id="eventTypeRow"><span data-i18n="recordType">记录类型</span>
+<select id="eventTypeSelect">
+<option data-i18n="pee" value="pee">小便</option>
+<option data-i18n="poop" value="poop">大便</option>
+<option data-i18n="meal" value="meal">吃饭</option>
+<option data-i18n="water" value="water">喝水</option>
+<option data-i18n="weight" value="weight">体重</option>
+<option data-i18n="note" value="note">备注</option>
+</select>
+</label>
 <label><span data-i18n="time">时间</span>
         <input id="eventTime" required="" type="datetime-local"/>
 </label>
@@ -190,7 +221,7 @@
 </label>
 <div class="dialog-actions">
 <button class="secondary" data-i18n="cancel" id="cancelDialogBtn" type="button">取消</button>
-<button class="primary" data-i18n="saveRecord" type="submit">保存记录</button>
+<button class="primary" data-i18n="saveRecord" id="saveEventBtn" type="submit">保存记录</button>
 </div>
 </form>
 </dialog>
@@ -236,6 +267,27 @@
 </div>
 <div class="settings-pet-list" id="settingsPetList"></div>
 </div>
+<div class="reminder-settings" id="reminderSettingsSection">
+<div class="reminder-settings-head">
+<div>
+<small data-i18n="outingReminder">出门提醒</small>
+<strong id="reminderPetName">Puppy</strong>
+</div>
+</div>
+<label><span data-i18n="reminderSchedule">提醒间隔</span>
+<select id="reminderPreset">
+<option data-i18n="reminderPuppyPreset" value="4">幼犬 · 每 4 小时</option>
+<option data-i18n="reminderAdultPreset" value="6.5">大狗 · 每 6.5 小时</option>
+<option data-i18n="reminderCustomPreset" value="custom">自定义</option>
+<option data-i18n="reminderOffPreset" value="off">关闭提醒</option>
+</select>
+</label>
+<label class="hidden" id="reminderCustomRow"><span data-i18n="customHours">自定义小时数</span>
+<input id="reminderCustomHours" inputmode="decimal" max="24" min="0.5" step="0.5" type="number" value="4"/>
+</label>
+<button class="secondary full" data-i18n="saveReminder" id="saveReminderBtn" type="button">保存提醒设置</button>
+<p class="hint" data-i18n="reminderLocalHint">按最近一次小便记录计算。设置只保存在当前设备，每台手机可以单独选择。</p>
+</div>
 <p class="hint" data-i18n="sharedHint">每只小狗的大小便、吃饭、喝水和体重会分别保存。你和家人看到的是同一组小狗和同一份云端记录。</p>
 <button class="danger full" data-i18n="signOut" id="signOutBtn">退出登录</button>
 </div>
@@ -259,7 +311,7 @@
 </form>
 </dialog>
 <script src="./config.js"></script>
-<script src="./app.js?v=7"></script>
+<script src="./app.js?v=9"></script>
 </body>
 </html>
 
